@@ -4,21 +4,23 @@ import settings from '../images/setting.svg';
 import trash from '../images/trash.png';
 import add from '../images/add.png';
 import edit from '../images/edit.png';
+import plus from '../images/plus.png';
 import Popup from './popup';
 import { useState } from 'react';
 
 
 const Home = () => {
     const[showPopup, setShowPopup] = useState(true)
+    const[showBg, setShowBg] = useState(false)
     return (
         <div className=''>
             {showPopup &&(<Popup/>)}
-            <div className=" lg:py-[35px] lg:px-[80px] p-6 relative">
+            {showBg && <div className=" lg:py-[35px] lg:px-[80px] p-6 relative">
                 <div className=" navbar flex flex-row justify-between items-center">
                     <p className=' font-Labrada lg:text-3xl text-xl font-bold'>My Notes</p>
                     <span className=" flex flex-row space-x-5">
                         <img src={ search } className=' w-6 lg:w-[32px] cursor-pointer' alt="search" />
-                        <img src={ collection } className=' w-6 lg:w-[32px] cursor-pointer' alt="collection" />
+                        <img src={ collection } className=' w-6 lg:w-[32px] lg:block hidden cursor-pointer' alt="collection" />
                         <img src={ settings } className= ' w-6 lg:w-[32px] cursor-pointer' alt="setting" />
                     </span>
                 </div>
@@ -85,8 +87,9 @@ const Home = () => {
                     </div>
                 </div>
                 <button className=' ml-auto flex px-[16px] mt-2 py-[10px] bg-[#f1f1f1] rounded-[20px] font-Labrada text-base font-semibold '>+  Add Note</button>
-                <button className=' w-[60px] h-[60px] rounded-[50%] bg-white shadow-sm fixed bottom-6'></button>
-            </div>
+                <button className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-white shadow-sm fixed bottom-6
+                 right-6 md:hidden'><img src={ plus } alt="" /></button>
+            </div>}
         </div>
      );
 }
