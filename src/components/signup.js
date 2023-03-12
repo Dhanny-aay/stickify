@@ -1,4 +1,5 @@
 import right from '../images/right.png';
+import load from '../images/load.gif';
 import nt1 from '../images/nt1.png';
 import { Link } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
@@ -10,6 +11,8 @@ import { useState } from 'react';
 
 
 const Signup = () => {
+
+    const [image, setImage] = useState(right)
 
     const Navigate = useNavigate();
     const [name, nameValue] = useState('');
@@ -45,6 +48,7 @@ const Signup = () => {
         };
 
         const signUp = ()=>{
+            setImage(load)
             createUserWithEmailAndPassword(auth, mail, password)
             .then((userCredential)=>{
                 const user =userCredential.user;
@@ -61,6 +65,7 @@ const Signup = () => {
                 const errorMessage = error.message;
                 const err = document.getElementById('error');
                 err.innerHTML=errorCode;
+                setImage(right)
             })
         };
         function checkUser(){
@@ -90,11 +95,11 @@ const Signup = () => {
                     </div>
                     <div className='  w-full md:w-[350px] lg:w-full space-y-1 flex flex-col items-center'>
                         <button onClick={ signUp } className=" flex justify-center transition-all space-x-2 items-center w-full md:w-[350px] lg:w-full rounded-md py-2 font-Labrada text-white text-sm font-bold bg-[#000] hover:bg-opacity-70">Sign Up
-                        <img src={ right } className='w-6 h-6 ml-2 mt-1' alt="" />
+                        <img src={ image } className='w-6 h-6 ml-2 mt-1' alt="" />
                         </button>
                         <span className=' flex flex-row font-Labrada text-sm space-x-1 text-gray-900'>
                             <p>Already Have an Account?</p>
-                            <Link to='/'>
+                            <Link to='/login'>
                                 <p className=' text-gray-700'>Sign in</p>
                             </Link>
                         </span>

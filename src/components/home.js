@@ -7,9 +7,65 @@ import close from '../images/close.png';
 import gallery from '../images/export.png';
 import { useState } from 'react';
 import Notes from './notes';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
+    const Navigate  = useNavigate();
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBAVjs6k8QqgO1JRFFmPCzLrgxnc3HzFQY",
+        authDomain: "stickify-24f12.firebaseapp.com",
+        projectId: "stickify-24f12",
+        storageBucket: "stickify-24f12.appspot.com",
+        messagingSenderId: "41169137637",
+        appId: "1:41169137637:web:36c5cebfa226efe537c90c",
+        measurementId: "G-9JX3X7BFLX"
+      };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+
+    // chexk user
+    function checkUser(){
+        onAuthStateChanged(auth, (user)=>{
+            if(user){
+
+            }
+            else{
+                // Navigate('/login')
+            }
+        })
+    };
+    checkUser();
+    
+    // popup content
+    const[noteTopic, newNoteTopic] = useState('');
+    const[noteDesc, newNoteDesc] = useState('');
+    const[noteContent, newNoteContent] = useState('');
+
+    function setNoteTopic(){
+        let notetopic = document.getElementById('noteTopic').value;
+        console.log(notetopic);
+        newNoteTopic(notetopic);
+    };
+    function setNoteDesc(){
+        let notedesc = document.getElementById('noteDesc').value;
+        console.log(notedesc);
+        newNoteDesc(notedesc);
+    };
+    function setNoteContent(){
+        let notecontent = document.getElementById('noteContent').value;
+        console.log(notecontent);
+        newNoteContent(notecontent);
+    }
+
+    // dom manipulation for popup 
     const[showPopup, setShowPopup] = useState(false);
     const[showBg, setShowBg] = useState(true);
     const togglePopup = ()=>{
@@ -18,7 +74,6 @@ const Home = () => {
             setShowBg(false);
         };
     };
-
     const toggleBg = ()=>{
         if(showBg === false){
             setShowPopup(false);
@@ -39,16 +94,16 @@ const Home = () => {
                         <div className=' md:w-[50%] w-full h-[250px] mr-5 flex flex-col space-y-3'>
                             <div className=''>
                                 <p className=' font-Labrada font-semibold text-lg'>Topic</p>
-                                <input type="text" className=' font-normal text-sm p-3 font-Labrada bg-[#f1f1f1] rounded-[20px] w-full md:h-[60px] h-12 mt-[6px]' />
+                                <input onKeyUp={setNoteTopic} id='noteTopic' type="text" className=' font-normal text-sm p-3 font-Labrada bg-[#f1f1f1] rounded-[20px] w-full md:h-[60px] h-12 mt-[6px]' />
                             </div>
                             <div className=''>
                                 <p className=' font-Labrada font-semibold text-lg'>Description</p>
-                                <input type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
+                                <input onKeyUp={setNoteDesc} id='noteDesc' type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
                             </div>
                         </div>
                         <div className=' md:w-[50%] w-full md:h-[250px] h-48 md:ml-5'>
                             <p className=' font-Labrada font-semibold text-lg '>Note</p>
-                            <input className=' bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm'/>
+                            <input onKeyUp={setNoteContent} id='noteContent' className=' bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm'/>
                         </div>
                     </div>
                 </div>
