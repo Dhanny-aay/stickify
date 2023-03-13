@@ -1,4 +1,4 @@
-import collection from '../images/collection.png';
+import group from '../images/collection.png';
 import search from '../images/search.png';
 import settings from '../images/setting.svg';
 import plus from '../images/plus.png';
@@ -10,6 +10,7 @@ import Notes from './notes';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, collection, addDoc, onSnapshot, query, where, doc} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -30,12 +31,23 @@ const Home = () => {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth();
+    const db = getFirestore(app);
 
     // chexk user
     function checkUser(){
         onAuthStateChanged(auth, (user)=>{
             if(user){
-
+                const uid = user.uid;
+                newUserUid(uid);
+                //get notes
+                //collection ref
+                const colref = collection(db, 'notes');
+                // queries 
+                const q = query(colref, where('uid', '==', user.uid));
+                onSnapshot(q ,(snapshot) => {
+                    snapshot.docs.map((doc) => {
+                    })
+                  })
             }
             else{
                 // Navigate('/login')
@@ -45,6 +57,7 @@ const Home = () => {
     checkUser();
     
     // popup content
+    const[userUid, newUserUid] = useState('');
     const[noteTopic, newNoteTopic] = useState('');
     const[noteDesc, newNoteDesc] = useState('');
     const[noteContent, newNoteContent] = useState('');
@@ -64,6 +77,25 @@ const Home = () => {
         console.log(notecontent);
         newNoteContent(notecontent);
     }
+
+    // add note content to notes collection
+    const saveNote = ()=>{
+        const noteDoc = collection(db, 'notes');
+        const docData ={
+            uid: userUid,
+            NoteTopic: noteTopic,
+            NoteDesc: noteDesc,
+            NoteContent: noteContent,
+        };
+        addDoc(noteDoc, docData)
+        .then(()=>{
+
+        })
+        .catch(()=>{
+
+        })
+    };
+
 
     // dom manipulation for popup 
     const[showPopup, setShowPopup] = useState(false);
@@ -113,14 +145,14 @@ const Home = () => {
                     <button className=' px-4 py-2 bg-white rounded-[10px] font-Labrada text-base font-semibold'>Choose picture</button>
                     <p className='font-Labrada text-xs font-medium text-[rgba(0,0,0,0.5) ]'>Maximum picture size: 5mb</p>
                 </div>
-                <button className=' px-4 py-2 font-Labrada text-base font-semibold bg-[#f1f1f1] rounded-[10px] mb-11 mt-6 '>Save Note</button>
+                <button onClick={ saveNote } className=' px-4 py-2 font-Labrada text-base font-semibold bg-[#f1f1f1] rounded-[10px] mb-11 mt-6 '>Save Note</button>
             </div>}
           { showBg && <div id='bg' className=" lg:py-[35px] lg:px-[80px] p-6 relative">
                 <div className=" navbar flex flex-row justify-between items-center">
                     <p className=' font-Labrada lg:text-3xl text-xl font-bold'>My Notes</p>
                     <span className=" flex flex-row space-x-5">
                         <img src={ search } className=' w-6 lg:w-[32px] cursor-pointer' alt="search" />
-                        <img src={ collection } className=' w-6 lg:w-[32px] lg:block hidden cursor-pointer' alt="collection" />
+                        <img src={ group } className=' w-6 lg:w-[32px] lg:block hidden cursor-pointer' alt="collection" />
                         <img src={ settings } className= ' w-6 lg:w-[32px] cursor-pointer' alt="setting" />
                     </span>
                 </div>
