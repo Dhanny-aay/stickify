@@ -91,7 +91,7 @@ const Home = () => {
             NoteTopic: noteTopic,
             NoteDesc: noteDesc,
             NoteContent: noteContent,
-            NoteBg: noteBg,
+            NoteBg: noteBg
         };
         addDoc(noteDoc, docData)
         .then(()=>{
