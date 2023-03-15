@@ -1,5 +1,5 @@
-import { useState } from "react";
-const Palette = () => {
+import { useEffect, useState } from "react";
+const Palette = (props) => {
 
     const [noteBg, newNoteBg] = useState('');
 
@@ -8,6 +8,10 @@ const Palette = () => {
         newNoteBg(e.target.value);
         // console.log('value is:', e.target.value);
     }
+    useEffect(()=>{
+        props.GetnoteBgColor(noteBg);
+    }, [noteBg])
+
 
     return ( 
         <div className="  mt-[64px] z-[999999]">

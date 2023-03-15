@@ -61,6 +61,7 @@ const Home = () => {
     const[noteTopic, newNoteTopic] = useState('');
     const[noteDesc, newNoteDesc] = useState('');
     const[noteContent, newNoteContent] = useState('');
+    const[noteBg, setNoteBg] = useState('');
 
     function setNoteTopic(){
         let notetopic = document.getElementById('noteTopic').value;
@@ -76,7 +77,11 @@ const Home = () => {
         let notecontent = document.getElementById('noteContent').value;
         console.log(notecontent);
         newNoteContent(notecontent);
-    }
+    };
+    //get bg color from palette component
+    const noteBgColor=(value)=>{
+        setNoteBg(value)
+    };
 
     // add note content to notes collection
     const saveNote = ()=>{
@@ -86,6 +91,7 @@ const Home = () => {
             NoteTopic: noteTopic,
             NoteDesc: noteDesc,
             NoteContent: noteContent,
+            NoteBg: noteBg,
         };
         addDoc(noteDoc, docData)
         .then(()=>{
@@ -95,7 +101,7 @@ const Home = () => {
 
         })
     };
-
+    
 
     // dom manipulation for popup 
     const[showPopup, setShowPopup] = useState(false);
@@ -139,7 +145,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <Palette/>
+                <Palette GetnoteBgColor={noteBgColor}/>
                 <div className=' mt-[62px] w-full h-[150px] bg-[#f1f1f1] rounded-[20px] flex flex-col justify-center items-center space-y-3'>
                     <img src={ gallery } className='' alt="" />
                     <button className=' px-4 py-2 bg-white rounded-[10px] font-Labrada text-base font-semibold'>Choose picture</button>
