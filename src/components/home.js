@@ -57,6 +57,7 @@ const Home = () => {
     checkUser();
     
     // popup content
+    const date = new Date();
     const[userUid, newUserUid] = useState('');
     const[noteTopic, newNoteTopic] = useState('');
     const[noteDesc, newNoteDesc] = useState('');
@@ -91,7 +92,8 @@ const Home = () => {
             NoteTopic: noteTopic,
             NoteDesc: noteDesc,
             NoteContent: noteContent,
-            NoteBg: noteBg
+            NoteBg: noteBg,
+            date:date,
         };
         addDoc(noteDoc, docData)
         .then(()=>{
