@@ -5,7 +5,7 @@ import plus from '../images/plus.png';
 import Palette from './palette';
 import close from '../images/close.png';
 import gallery from '../images/export.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Notes from './notes';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -33,8 +33,10 @@ const Home = () => {
     const auth = getAuth();
     const db = getFirestore(app);
 
-    // chexk user
-    function checkUser(){
+    // chexk user + get notes
+    const [notes, setNotes] = useState([]);
+
+    useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
             if(user){
                 const uid = user.uid;
@@ -45,16 +47,18 @@ const Home = () => {
                 // queries 
                 const q = query(colref, where('uid', '==', user.uid));
                 onSnapshot(q ,(snapshot) => {
-                    snapshot.docs.map((doc) => {
-                    })
-                  })
+                    snapshot.docs.forEach((doc) => {
+                        setNotes(doc.data());
+                    });
+                  });
             }
             else{
-                // Navigate('/login')
+                //Navigate('/login')
             }
         })
-    };
-    checkUser();
+    }, []);
+   
+    
     
     // popup content
     const date = new Date();
@@ -66,17 +70,17 @@ const Home = () => {
 
     function setNoteTopic(){
         let notetopic = document.getElementById('noteTopic').value;
-        console.log(notetopic);
+        // console.log(notetopic);
         newNoteTopic(notetopic);
     };
     function setNoteDesc(){
         let notedesc = document.getElementById('noteDesc').value;
-        console.log(notedesc);
+        // console.log(notedesc);
         newNoteDesc(notedesc);
     };
     function setNoteContent(){
         let notecontent = document.getElementById('noteContent').value;
-        console.log(notecontent);
+        // console.log(notecontent);
         newNoteContent(notecontent);
     };
     //get bg color from palette component
@@ -97,10 +101,10 @@ const Home = () => {
         };
         addDoc(noteDoc, docData)
         .then(()=>{
-
+            alert('saved')
         })
-        .catch(()=>{
-
+        .catch((error)=>{
+            alert(error)
         })
     };
     
@@ -138,12 +142,13 @@ const Home = () => {
                             </div>
                             <div className=''>
                                 <p className=' font-Labrada font-semibold text-lg'>Description</p>
-                                <input onKeyUp={setNoteDesc} id='noteDesc' type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
+                                <input onKeyUp={setNoteDesc} id='noteDesc' type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] whitespace-pre rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
                             </div>
                         </div>
                         <div className=' md:w-[50%] w-full md:h-[250px] h-48 md:ml-5'>
                             <p className=' font-Labrada font-semibold text-lg '>Note</p>
-                            <input onKeyUp={setNoteContent} id='noteContent' className=' bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm'/>
+                            <textarea name="" id="noteContent" className='bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm' cols="30" rows="10"></textarea>
+                            {/* <input onKeyUp={setNoteContent} id='noteContent' className=' bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm'/> */}
                         </div>
                     </div>
                 </div>
