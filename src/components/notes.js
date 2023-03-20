@@ -1,12 +1,14 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, onSnapshot, query, where, doc} from 'firebase/firestore';
+import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, deleteDoc} from 'firebase/firestore';
 import trash from '../images/trash.png';
 import add from '../images/add.png';
 import edit from '../images/edit.png';
 import { useEffect, useState } from 'react';
 import '../index.css';
+import plus from '../images/plus.png';
+import bin from '../images/rubbish.png';
 
 const Notes = () => {
 
@@ -26,7 +28,9 @@ const Notes = () => {
     const auth = getAuth();
     const db = getFirestore(app);
 
-      const [note, setNote] = useState([])
+      const [note, setNote] = useState([]);
+    //   const [docId, setDocId] = useState('');
+
 
     useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
@@ -51,84 +55,84 @@ const Notes = () => {
         })
     }, [Notes]);
 
+    const [popup, setPopup] = useState(false);
+    // const [delValue, setDelValue] = useState('');
+    const [noteId, setNoteId] = useState('');
+
+    const getDelValue =(e)=>{
+        const val = e.target.value;
+        if(val == 'Cancel'){
+            setPopup(false);  
+        }
+        else if(val=='Delete'){
+            setPopup(false);
+            deleteDoc(doc(db, "notes", noteId))
+            .then(()=>{
+                const delWarn = document.getElementById('delWarn');
+                delWarn.classList.remove('translate-x-[100vw]')
+                removeWarn();
+            })
+            .catch((error)=>{
+            })
+        }
+    }
+    function removeWarn(){
+            setTimeout(()=>{
+                const delWarn = document.getElementById('delWarn');
+                delWarn.classList.add('translate-x-[100vw]')
+            }, 4500)
+    }
+
+
+    const handleClick = e =>{
+        setPopup(true)
+        // alert('hello')
+        const bin = e.target.parentElement;
+        const docId = bin.parentElement.getAttribute('id');
+        setNoteId(docId);
+    }
+
     return ( 
-        <div id='notes' className='notes mt-[32px] w-full mx-auto flex flex-col md:flex-row flex-wrap justify-between'>
-            { note.map((doc) =>(
-                <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%]  rounded-[20px] bg-[${doc.data().noteBg}] p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} key={doc.id}>
-                    <p className=' font-Labrada font-semibold text-base text-black'>{doc.data().NoteTopic}</p>
-                    <p className=' font-Labrada font-medium mt-1 text-sm'>{doc.data().NoteDesc}</p>
-                    <p className=' font-Labrada font-normal mt-1 text-sm'>{doc.data().NoteContent}</p>
-                    <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                    <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
+        <div className=''>
+            {popup && <div className=' fixed h-[100vh] top-0 left-0 w-[100vw] bg-[rgba(0,0,0,0.3)] z-[99999] flex justify-center items-center'>
+                <div className=' bg-[#f1f1f1] py-6 px-10 rounded-[20px] flex flex-col justify-center items-center relative'>
+                    <p className=' font-Labrada text-lg font-semibold'>You are about to delete a note</p>
+                    <p className=' font-Labrada text-base text-gray-500 font-medium mt-3'>This will delete your note permanently</p>
+                    <p className=' font-Labrada text-base text-gray-500 font-medium'>Are you Sure?</p>
+                    <span className='  flex space-x-4 mt-3'>
+                        <input type="button" onClick={getDelValue} value="Cancel" className=' font-Labrada' />
+                        <input type="button" onClick={getDelValue} value="Delete" className=' px-2 py-1 text-white bg-red-700 rounded-md font-Labrada' />
+                    </span>
                 </div>
-            ))}
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%] rounded-[20px] bg-[#C8D8EF] p-6 relative'>
-                        <p className=' font-Labrada font-semibold text-base'>Topic</p>
-                        <p className=' font-Labrada font-medium mt-1 text-sm'>Brief description</p>
-                        <p className=' font-Labrada font-normal bg-transparent mt-1 text-sm h-[95px] overflow-x-hidden scrollbar' >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare nisl id erat suscipit, eget egestas velit tincidunt. Phasellus venenatis enim eget massa condimentum suscipit sed convallis libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam sed libero eget odio posuere convallis. Quisque ut lacus sed quam vestibulum aliquet. Aliquam id risus vitae sapien.</p>
-                        <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
-                    </div>
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%] rounded-[20px] bg-[#EAE4EE] p-6 relative'>
-                        <p className=' font-Labrada font-semibold text-base'>Topic</p>
-                        <p className=' font-Labrada font-medium mt-1 text-sm'>Brief description</p>
-                        <p className=' font-Labrada font-normal mt-1 text-sm'>chdvdjvh djkdkjdj jdk jdhyss scol;csus  ccsjyuol gcsklshttgbscbc c usukl hduycij sgtj</p>
-                        <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
-                    </div>
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%] rounded-[20px] bg-[#D5B3D6] p-6 relative'>
-                        <p className=' font-Labrada font-semibold text-base'>Topic</p>
-                        <p className=' font-Labrada font-medium mt-1 text-sm'>Brief description</p>
-                        <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
-                    </div>
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%] rounded-[20px] bg-[#98B6EC] p-6 relative'>
-                        <p className=' font-Labrada font-semibold text-base'>Topic</p>
-                        <p className=' font-Labrada font-medium mt-1 text-sm'>Brief description</p>
-                        <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
-                    </div>
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%] rounded-[20px] bg-[#FFF9E1] p-6 relative'>
-                        <p className=' font-Labrada font-semibold text-base'>Topic</p>
-                        <p className=' font-Labrada font-medium mt-1 text-sm'>Brief description</p>
-                        <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
-                    </div>
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] lg:flex-[0_1_28%] rounded-[20px] bg-[#FCE681] p-6 relative'>
-                        <p className=' font-Labrada font-semibold text-base'>Topic</p>
-                        <p className=' font-Labrada font-medium mt-1 text-sm'>Brief description</p>
-                        <p className='font-Labrada font-medium absolute bottom-6 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-6 flex flex-row items-center space-x-2'>
-                            <img src={ edit } className=' w-[20px]' alt="" />
-                            <img src={ add } className=' w-[20px]' alt="" />
-                            <img src={ trash } className=' w-[20px]' alt="" />
-                        </span>
-                    </div>
+            </div>}
+            <div id='delWarn' className=' translate-x-[100vw] transition-all  bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
+                <div className=' w-[30%] h-full bg-[#fdd037] rounded-l-md flex justify-center  items-center'>
+                    <img src={ bin } alt="" className=' w-6' />
                 </div>
+                <div className=' flex justify-center items-center p-2'>
+                    <p className=' font-Labrada text-base'>Sucessfully Deleted</p>
+                </div>
+            </div>
+            <div id='notes' className='notes mt-[32px] w-full mx-auto flex flex-col md:flex-row flex-wrap justify-between'>
+                { note.map((doc) =>(
+                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%]  rounded-[20px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
+                        <p className=' font-Labrada w-full font-semibold text-base '>{doc.data().NoteTopic}</p>
+                        <p className=' font-Labrada w-full font-medium mt-1 text-base'>{doc.data().NoteDesc}</p>
+                        <p className=' font-Labrada w-full font-normal bg-transparent mt-1 text-sm h-[95px] overflow-x-hidden scrollbar'>{doc.data().NoteContent}</p>
+                        <p className='font-Labrada font-medium absolute bottom-5 left-6 text-sm'>Date</p>
+                        <span className=' absolute right-6 bottom-5 flex flex-row items-center space-x-2'>
+                                <img src={ edit } className=' w-[20px]' alt="" />
+                                <img src={ trash } onClick={ handleClick } className=' w-[20px]' alt="" />
+                            </span>
+                    </div>
+                ))}
+                <div className=' shadow-sm h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%] rounded-[20px] bg-tr p-6 relative bg-[#f1f1f1] flex justify-center items-center flex-col'>
+                    <button className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#f1f1f1]'><img src={ plus } alt="" /></button>
+                    <p className='font-Labrada font-semibold text-base text-black'>Add New Note</p>
+                </div>
+            </div>
+        </div>
+        
     );
 }
  

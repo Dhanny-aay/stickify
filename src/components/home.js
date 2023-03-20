@@ -53,7 +53,7 @@ const Home = () => {
                   });
             }
             else{
-                //Navigate('/login')
+                Navigate('/login')
             }
         })
     }, []);
@@ -137,17 +137,17 @@ const Home = () => {
                     <div className=' w-full flex md:flex-row flex-col mt-4 justify-between md:space-y-0'>
                         <div className=' md:w-[50%] w-full h-[250px] mr-5 flex flex-col space-y-3'>
                             <div className=''>
-                                <p className=' font-Labrada font-semibold text-lg'>Topic</p>
+                                <p className=' font-Labrada font-medium text-lg'>Topic</p>
                                 <input onKeyUp={setNoteTopic} id='noteTopic' type="text" className=' font-normal text-sm p-3 font-Labrada bg-[#f1f1f1] rounded-[20px] w-full md:h-[60px] h-12 mt-[6px]' />
                             </div>
                             <div className=''>
-                                <p className=' font-Labrada font-semibold text-lg'>Description</p>
-                                <input onKeyUp={setNoteDesc} id='noteDesc' type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] whitespace-pre rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
+                                <p className=' font-Labrada font-medium text-lg'>Description : Max length(32)</p>
+                                <input onKeyUp={setNoteDesc} maxLength='32' id='noteDesc' type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] whitespace-pre rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
                             </div>
                         </div>
                         <div className=' md:w-[50%] w-full md:h-[250px] h-48 md:ml-5'>
-                            <p className=' font-Labrada font-semibold text-lg '>Note</p>
-                            <textarea name="" id="noteContent" className='bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm' cols="30" rows="10"></textarea>
+                            <p className=' font-Labrada font-medium text-lg '>Note</p>
+                            <textarea onKeyUp={setNoteContent} id="noteContent" className='bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm' cols="30" rows="10"></textarea>
                             {/* <input onKeyUp={setNoteContent} id='noteContent' className=' bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm'/> */}
                         </div>
                     </div>

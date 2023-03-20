@@ -15,7 +15,7 @@ const Palette = (props) => {
 
     return ( 
         <div className="  mt-[64px] z-[999999]">
-            <p className=" font-Labrada font-semibold text-lg">Choose Background</p>
+            <p className=" font-Labrada font-medium text-lg">Choose Background</p>
             <div className="flex md:flex-row flex-col w-full mt-1">
                 <div className=" flex flex-row md:w-1/3 w-full h-[52px]">
                     <input type="button" onClick={handleClick} value='#9747FF' className="bgColor text-transparent noteColor w-[calc(100%/7)] h-full bg-[#9747FF] hover:border hover:border-black focus:border focus:border-black" />
