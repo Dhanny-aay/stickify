@@ -12,6 +12,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, collection, addDoc, onSnapshot, query, where} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 
 const Home = () => {
@@ -35,6 +36,7 @@ const Home = () => {
 
     // chexk user + get notes
     const [notes, setNotes] = useState([]);
+    const [isUser, setisUser] = useState(false)
 
     useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
@@ -53,10 +55,19 @@ const Home = () => {
                   });
             }
             else{
-                Navigate('/login')
+                //Navigate('/login')
             }
         })
     }, []);
+
+    const handleClick = ()=>{
+        if(isUser == false){
+            setisUser(true);
+        }
+        else if(isUser == true){
+            setisUser(false)
+        };
+    };
    
     const signout = ()=>{
         signOut(auth).then(() => {
@@ -178,19 +189,22 @@ const Home = () => {
                     </div>
                 </div>
                 <Palette GetnoteBgColor={noteBgColor}/>
-                <div className=' mt-7'>
-                    <p className=' font-Labrada text-lg font-medium'>Pick a tag</p>
-
-                </div>
                 <button onClick={ saveNote } className=' px-4 py-2 font-Labrada text-base font-semibold bg-[#f1f1f1] rounded-[10px] mb-11 mt-6 '>Save Note</button>
             </div>}
           { showBg && <div id='bg' className=" lg:py-[35px] lg:px-[80px] p-6 relative">
                 <div className=" navbar flex flex-row justify-between items-center">
                     <p className=' font-Labrada lg:text-3xl text-xl font-bold'>My Notes</p>
                     <span className=" flex flex-row space-x-3 md:space-x-5">
-                        <img src={ search } className=' w-6 lg:w-[32px] cursor-pointer' alt="search" />
-                        <img src={ user } className=' w-6 lg:w-[32px] cursor-pointer' alt="search" />
-                        <img src={ exit } onClick={ signout } className= ' w-6 lg:w-[32px] cursor-pointer' alt="setting" />
+                        <img src={ search } className=' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="search" />
+                        <div className=' flex flex-col '>
+                            <img src={ user } onClick={ handleClick } className=' w-6 lg:w-[32px]  h-6 lg:h-[32px] cursor-pointer' alt="search" />
+                            { isUser && <span className=' lg:top-20 top-16 z-[99] right-6 p-4 absolute bg-[#f1f1f1] shadow'>
+                                <img src={ user } alt="" />
+                                <p className=' font-Labrada text-sm font-medium'>Daniel Akintolu</p>
+                                <p className=' font-Labrada text-sm font-medium'>Danielakintolu@gmail.com</p>
+                            </span>}
+                        </div>
+                        <img src={ exit } onClick={ signout } className= ' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="setting" />
                     </span>
                 </div>
                 <Notes/>
