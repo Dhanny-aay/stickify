@@ -1,16 +1,16 @@
-import group from '../images/collection.png';
 import search from '../images/search.png';
-import settings from '../images/setting.svg';
+import user from '../images/user.png';
+import exit from '../images/exit.png';
 import plus from '../images/plus.png';
 import Palette from './palette';
 import close from '../images/close.png';
-import gallery from '../images/export.png';
 import { useEffect, useState } from 'react';
 import Notes from './notes';
+import saved from '../images/saved.png';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, addDoc, onSnapshot, query, where, doc} from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getFirestore, collection, addDoc, onSnapshot, query, where} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -58,7 +58,13 @@ const Home = () => {
         })
     }, []);
    
-    
+    const signout = ()=>{
+        signOut(auth).then(() => {
+            Navigate('/login')
+          }).catch((error) => {
+            // An error happened.
+          });
+    };
     
     // popup content
     const date = new Date();
@@ -99,14 +105,25 @@ const Home = () => {
             NoteBg: noteBg,
             date:date,
         };
+        toggleBg();
         addDoc(noteDoc, docData)
         .then(()=>{
-            alert('saved')
+            const saveWarn = document.getElementById('saveWarn');
+                saveWarn.classList.remove('translate-x-[100vw]')
+                removeSave();
         })
         .catch((error)=>{
             alert(error)
         })
     };
+
+    function removeSave(){
+        setTimeout(()=>{
+            const saveWarn = document.getElementById('saveWarn');
+            saveWarn.classList.add('translate-x-[100vw]')
+        }, 4500)
+}
+
     
 
     // dom manipulation for popup 
@@ -118,7 +135,7 @@ const Home = () => {
             setShowBg(false);
         };
     };
-    const toggleBg = ()=>{
+    function toggleBg(){
         if(showBg === false){
             setShowPopup(false);
             setShowBg(true);
@@ -126,6 +143,14 @@ const Home = () => {
     };
     return (
         <div>
+            <div id='saveWarn' className=' translate-x-[100vw] transition-all  bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
+                <div className=' w-[30%] h-full bg-[#fdd037] rounded-l-md flex justify-center  items-center'>
+                    <img src={ saved } alt="" className=' w-6' />
+                </div>
+                <div className=' flex justify-center items-center p-2'>
+                    <p className=' font-Labrada text-base'>Sucessfully Saved</p>
+                </div>
+            </div>
            {showPopup && <div id='popUp' className="w-full absolute bg-white lg:py-[35px] lg:px-[80px] p-6 top-0 left-0 z-50">
                 <div className=" navbar flex flex-row justify-between items-center">
                         <p className=' font-Labrada lg:text-3xl text-xl font-bold'>Create Note</p>
@@ -153,20 +178,19 @@ const Home = () => {
                     </div>
                 </div>
                 <Palette GetnoteBgColor={noteBgColor}/>
-                <div className=' mt-[62px] w-full h-[150px] bg-[#f1f1f1] rounded-[20px] flex flex-col justify-center items-center space-y-3'>
-                    <img src={ gallery } className='' alt="" />
-                    <button className=' px-4 py-2 bg-white rounded-[10px] font-Labrada text-base font-semibold'>Choose picture</button>
-                    <p className='font-Labrada text-xs font-medium text-[rgba(0,0,0,0.5) ]'>Maximum picture size: 5mb</p>
+                <div className=' mt-7'>
+                    <p className=' font-Labrada text-lg font-medium'>Pick a tag</p>
+
                 </div>
                 <button onClick={ saveNote } className=' px-4 py-2 font-Labrada text-base font-semibold bg-[#f1f1f1] rounded-[10px] mb-11 mt-6 '>Save Note</button>
             </div>}
           { showBg && <div id='bg' className=" lg:py-[35px] lg:px-[80px] p-6 relative">
                 <div className=" navbar flex flex-row justify-between items-center">
                     <p className=' font-Labrada lg:text-3xl text-xl font-bold'>My Notes</p>
-                    <span className=" flex flex-row space-x-5">
+                    <span className=" flex flex-row space-x-3 md:space-x-5">
                         <img src={ search } className=' w-6 lg:w-[32px] cursor-pointer' alt="search" />
-                        <img src={ group } className=' w-6 lg:w-[32px] lg:block hidden cursor-pointer' alt="collection" />
-                        <img src={ settings } className= ' w-6 lg:w-[32px] cursor-pointer' alt="setting" />
+                        <img src={ user } className=' w-6 lg:w-[32px] cursor-pointer' alt="search" />
+                        <img src={ exit } onClick={ signout } className= ' w-6 lg:w-[32px] cursor-pointer' alt="setting" />
                     </span>
                 </div>
                 <Notes/>

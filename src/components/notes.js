@@ -1,9 +1,8 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, deleteDoc} from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, query, where, doc, deleteDoc, orderBy, updateDoc} from 'firebase/firestore';
 import trash from '../images/trash.png';
-import add from '../images/add.png';
 import edit from '../images/edit.png';
 import { useEffect, useState } from 'react';
 import '../index.css';
@@ -29,6 +28,7 @@ const Notes = () => {
     const db = getFirestore(app);
 
       const [note, setNote] = useState([]);
+      const [isPending, setIsPending] = useState(true);
     //   const [docId, setDocId] = useState('');
 
 
@@ -40,11 +40,12 @@ const Notes = () => {
                 //collection ref
                 const colref = collection(db, 'notes');
                 // queries 
-                const q = query(colref, where('uid', '==', user.uid));
+                const q = query(colref, where('uid', '==', user.uid), orderBy("date", "asc"));
                 onSnapshot(q ,(snapshot) => {
                     const Notes =[];
                     snapshot.forEach((doc)=>{
                         Notes.push(doc);
+                        setIsPending(false);
                     });
                     setNote(Notes);
                 })
@@ -55,8 +56,8 @@ const Notes = () => {
         })
     }, [Notes]);
 
+
     const [popup, setPopup] = useState(false);
-    // const [delValue, setDelValue] = useState('');
     const [noteId, setNoteId] = useState('');
 
     const getDelValue =(e)=>{
@@ -92,6 +93,71 @@ const Notes = () => {
         setNoteId(docId);
     }
 
+    // edit note functions and states
+
+    const [noteEdit, setnoteEdit] = useState(false);
+    const [topic, setTopic] = useState('');
+    const [desc, setDesc] = useState('');
+    const [content, setContent] = useState('');
+
+    const handleEditClick = e =>{
+        setnoteEdit(true)
+        const bin = e.target.parentElement;
+        const docId = bin.parentElement.getAttribute('id');
+        setNoteId(docId);
+        const elements = bin.parentElement.children;
+        const top = elements[0].innerHTML;
+        const desc = elements[1].innerHTML;
+        const cont = elements[2].innerHTML;
+        setTopic(top);
+        setDesc(desc);
+        setContent(cont);
+    }
+
+    const getNewTopic = (e)=>{
+        const newtop = e.target.value;
+        setTopic(newtop)
+    }
+    const getNewDesc = (e)=>{
+        const newDesc = e.target.value;
+        setDesc(newDesc)
+    }
+    const getnewContent = (e)=>{
+        const newDesc = e.target.value;
+        setContent(newDesc)
+    }
+
+    const getEditValue =(e)=>{
+        const val = e.target.value;
+        if(val == 'Cancel'){
+            setnoteEdit(false);  
+        }
+        else if(val=='Save'){
+            setnoteEdit(false);
+            const docRef = doc(db, "notes", noteId);
+            const newData ={
+                NoteTopic:topic,
+                NoteDesc: desc,
+                NoteContent:content,
+            };
+            updateDoc(docRef, newData)
+            .then(()=>{
+                const upWarn = document.getElementById('upWarn');
+                upWarn.classList.remove('translate-x-[100vw]')
+                removeUpWarn();
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        }
+    }
+    function removeUpWarn(){
+        setTimeout(()=>{
+            const upWarn = document.getElementById('upWarn');
+            upWarn.classList.add('translate-x-[100vw]')
+        }, 4500)
+}
+
     return ( 
         <div className=''>
             {popup && <div className=' fixed h-[100vh] top-0 left-0 w-[100vw] bg-[rgba(0,0,0,0.3)] z-[99999] flex justify-center items-center'>
@@ -105,7 +171,7 @@ const Notes = () => {
                     </span>
                 </div>
             </div>}
-            <div id='delWarn' className=' translate-x-[100vw] transition-all  bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
+            <div id='delWarn' className=' translate-x-[100vw] transition-all duration-100 bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
                 <div className=' w-[30%] h-full bg-[#fdd037] rounded-l-md flex justify-center  items-center'>
                     <img src={ bin } alt="" className=' w-6' />
                 </div>
@@ -113,15 +179,24 @@ const Notes = () => {
                     <p className=' font-Labrada text-base'>Sucessfully Deleted</p>
                 </div>
             </div>
+            <div id='upWarn' className=' translate-x-[100vw] transition-all duration-75 bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
+                <div className=' w-[30%] h-full bg-[#fdd037] rounded-l-md flex justify-center  items-center'>
+                    <img src={ bin } alt="" className=' w-6' />
+                </div>
+                <div className=' flex justify-center items-center p-2'>
+                    <p className=' font-Labrada text-base'>Sucessfully Saved</p>
+                </div>
+            </div>
+            { isPending && <p className=' mt-[32px] font-medium text-lg font-Labrada'>Loading...</p>}
             <div id='notes' className='notes mt-[32px] w-full mx-auto flex flex-col md:flex-row flex-wrap justify-between'>
                 { note.map((doc) =>(
                     <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%]  rounded-[20px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
                         <p className=' font-Labrada w-full font-semibold text-base '>{doc.data().NoteTopic}</p>
                         <p className=' font-Labrada w-full font-medium mt-1 text-base'>{doc.data().NoteDesc}</p>
                         <p className=' font-Labrada w-full font-normal bg-transparent mt-1 text-sm h-[95px] overflow-x-hidden scrollbar'>{doc.data().NoteContent}</p>
-                        <p className='font-Labrada font-medium absolute bottom-5 left-6 text-sm'>Date</p>
-                        <span className=' absolute right-6 bottom-5 flex flex-row items-center space-x-2'>
-                                <img src={ edit } className=' w-[20px]' alt="" />
+                        <p className='font-Labrada font-medium absolute bottom-4 left-6 text-sm'>Date</p>
+                        <span className=' absolute right-6 bottom-4 flex flex-row items-center space-x-2'>
+                                <img src={ edit } onClick={ handleEditClick } className=' w-[20px]' alt="" />
                                 <img src={ trash } onClick={ handleClick } className=' w-[20px]' alt="" />
                             </span>
                     </div>
@@ -131,6 +206,29 @@ const Notes = () => {
                     <p className='font-Labrada font-semibold text-base text-black'>Add New Note</p>
                 </div>
             </div>
+            {noteEdit && <div className=' w-[100vw] flex justify-center items-center h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.3)] z-[99999] px-3'>
+                <div className=' bg-[#fff] rounded-[20px] px-6 py-8 w-full md:w-auto'>
+                    <div className=' space-y-4 flex flex-col w-full'>
+                        <span className=' flex flex-col space-y-2'>
+                            <label htmlFor="noteTopic" className=' font-Labrada font-medium text-lg'>Note Topic</label>
+                            <input className=' font-Labrada p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={topic} onChange={getNewTopic} type="text" />
+                        </span>
+                        <span className=' flex flex-col space-y-2'>
+                            <label htmlFor="noteDesc" className=' font-Labrada font-medium text-lg'>Note Description</label>
+                            <input className=' font-Labrada p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={desc} onChange={getNewDesc} type="text" />
+                        </span>
+                        <span className=' flex flex-col space-y-2'>
+                            <label htmlFor="note" className=' font-Labrada font-medium text-lg'>Note</label>
+                            <textarea className=' font-Labrada p-2 text-sm w-full md:w-[350px] h-[170px] bg-[#f1f1f1] rounded-md' defaultValue={content} onChange={getnewContent} type="text" >
+                            </textarea>
+                        </span>
+                        <span className=' flex flex-row ml-auto space-x-5'>
+                            <input type="button" onClick={ getEditValue } className=' font-Labrada font-medium text-base' value="Cancel" />
+                            <input type="button" onClick={ getEditValue } className=' font-Labrada font-medium py-1 px-2 bg-black text-white rounded-md text-base' value="Save" />
+                        </span>
+                    </div>
+                </div>
+            </div>}
         </div>
         
     );
