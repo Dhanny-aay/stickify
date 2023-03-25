@@ -7,7 +7,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 
@@ -69,20 +69,23 @@ const Signup = () => {
                 setImage(right)
             })
         };
-        function checkUser(){
+
+        useEffect(()=>{
             onAuthStateChanged(auth, (user)=>{
                 if(user){
-                    Navigate('/home')
+                    Navigate('/')
                 }
             })
-        };
-        checkUser();
-
+        }, []);
+            
+        
     return ( 
         <div className=" bg-[#f1f1f1] w-full h-[100vh]">
             <motion.div 
-            initial={{opacity:0}}
-            animate={{opacity:1}}
+            initial={{x:100, opacity:0}}
+            animate={{x:0, opacity:1}}
+            exit={{x:-100, opacity:0}}
+            transition={{delay:0.3}}
             className=" w-full h-full bg-transparent shadow flex flex-row">
                 <div className=" w-1/2 h-full hidden bg-[#fdd037] rounded-l-md p-6 lg:flex justify-center items-center relative">
                     <span className=" flex flex-row space-x-1 absolute top-6 left-6 font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
@@ -91,7 +94,7 @@ const Signup = () => {
                 <div className=" lg:w-1/2 w-full h-full lg:bg-[#fff] bg-[#fdd037] flex flex-col items-center justify-center rounded-r-md p-8 px-[8%] space-y-5 relative">
                 <span className=" flex lg:hidden flex-row space-x-1  font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
                     <p className=" font-Labrada text-lg text-center font-semibold">Sign Up Before you Continue...</p>
-                    <div className=" space-y-6 w-full md:w-[350px] lg:w-full w-full relative">
+                    <div className=" space-y-6 w-full md:w-[350px] lg:w-full relative">
                         <input id="name" onKeyUp={ setName } className=" w-full p-2 rounded-md font-normal text-sm font-Labrada bg-[#f1f1f1]" placeholder="Full-Name" type="text" />
                         <input id="mail" onKeyUp={setMail} className="bg-[#f1f1f1] rounded-md w-full p-2 font-normal text-sm font-Labrada" placeholder="Email Address" type="text" />
                         <input id="password" onKeyUp={ setPw } className="w-full p-2 rounded-md font-normal text-sm font-Labrada bg-[#f1f1f1]" placeholder="Password" type="text" />

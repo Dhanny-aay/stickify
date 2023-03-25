@@ -13,6 +13,7 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, collection, addDoc, onSnapshot, query, where} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import '../index.css';
 
 
 const Home = () => {
@@ -156,7 +157,12 @@ const Home = () => {
         };
     };
     return (
-        <div>
+        <motion.div
+            initial={{x:100, opacity:0}}
+            animate={{x:0, opacity:1}}
+            exit={{x:-100, opacity:0}}
+            transition={{delay:0.3}}
+        >
             <div id='saveWarn' className=' translate-x-[100vw] transition-all  bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
                 <div className=' w-[30%] h-full bg-[#fdd037] rounded-l-md flex justify-center  items-center'>
                     <img src={ saved } alt="" className=' w-6' />
@@ -198,22 +204,28 @@ const Home = () => {
                 <div className=" navbar flex flex-row justify-between items-center">
                     <p className=' font-Labrada lg:text-3xl text-xl font-bold'>My Notes</p>
                     <span className=" flex flex-row space-x-3 md:space-x-5">
-                        <img src={ search } className=' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="search" />
                         <div className=' flex flex-col '>
                             <img src={ user } onClick={ handleClick } className=' w-6 lg:w-[32px]  h-6 lg:h-[32px] cursor-pointer' alt="search" />
-                            { isUser && <span className=' lg:top-20 top-16 z-[99] right-6 p-4 absolute bg-[#f1f1f1] shadow space-y-2'>
+                            { isUser && <motion.span 
+                            initial={{y:-100}}
+                            animate={{y:0}}
+                            transition={{type:'spring', stiffness:80}}
+                            className=' bubble-top lg:top-20 top-16 z-[99] right-6 p-4 absolute bg-[#f1f1f1] shadow space-y-2 rounded-md'>
                                 <img src={ user } alt="" />
                                 <p className=' font-Labrada text-sm font-medium'>{ name }</p>
                                 <p className=' font-Labrada text-sm font-medium'>{ mail }</p>
-                            </span>}
+                            </motion.span>}
                         </div>
                         <img src={ exit } onClick={ signout } className= ' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="setting" />
                     </span>
                 </div>
                 <Notes/>
-                <button onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#f1f1f1] shadow fixed bottom-6 right-6 md:bottom-16 md:right-16'><img src={ plus } alt="" /></button>
+                <motion.button 
+                initial={{scale:1}}
+                whileHover={{scale:1.1}}
+                onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#f1f1f1] shadow fixed bottom-6 right-6 md:bottom-16 md:right-16'><img src={ plus } alt="" /></motion.button>
             </div>}
-        </div>
+        </motion.div>
      );
 }
  

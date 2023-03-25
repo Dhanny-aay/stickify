@@ -6,7 +6,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 
 const Login = () => {
@@ -46,23 +47,30 @@ const Login = () => {
         })
         .catch((error)=>{
             const errorCode = error.code;
-            const errorMessage = error.message;
+            // const errorMessage = error.message;
             const err = document.getElementById('error');
             err.innerHTML=errorCode;
             setImage(right)
         })
     };
-    function checkUser(){
+
+    useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
             if(user){
-                Navigate('/home')
+                Navigate('/')
             }
         })
-    };
-    checkUser();
+    }, []);
+        
+   
 
     return ( 
-        <div className=" bg-[#f1f1f1] w-full h-[100vh]">
+        <motion.div 
+            initial={{x:100, opacity:0}}
+            animate={{x:0, opacity:1}}
+            exit={{x:-100, opacity:0}}
+            transition={{delay:0.3}}
+        className=" bg-[#f1f1f1] w-full h-[100vh]">
             <div className=" w-full h-full bg-transparent shadow flex flex-row">
                 <div className=" w-1/2 h-full hidden bg-[#fdd037] rounded-l-md p-6 lg:flex justify-center items-center relative">
                     <span className=" flex flex-row space-x-1 absolute top-6 left-6 font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
@@ -82,14 +90,14 @@ const Login = () => {
                         </button>
                         <span className=' flex flex-row font-Labrada text-sm space-x-1 text-gray-900'>
                             <p>Don't Have an Account?</p>
-                            <Link to='/'>
+                            <Link to='/signup'>
                                 <p className=' text-gray-700'>Sign Up</p>
                             </Link>
                         </span>
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
 
      );
 }

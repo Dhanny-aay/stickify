@@ -10,9 +10,9 @@ function App() {
   return (
     <AnimatePresence mode="wait">
       <Routes key={location.pathname} location={location}>
-        <Route path="/" element={ <Signup/> }/>
+        <Route path="/signup" element={ <Signup/> }/>
         <Route path="/login" element={ <Login/> }/>
-        <Route path="/home" element={ <Home/> }/>
+        <Route path="/" element={ <Home/> }/>
       </Routes>
     </AnimatePresence>
       

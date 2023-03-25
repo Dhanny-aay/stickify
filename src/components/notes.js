@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import '../index.css';
 import plus from '../images/plus.png';
 import bin from '../images/rubbish.png';
+import { motion } from 'framer-motion';
 
 const Notes = () => {
 
@@ -28,7 +29,6 @@ const Notes = () => {
     const db = getFirestore(app);
 
       const [note, setNote] = useState([]);
-      const [isPending, setIsPending] = useState(true);
     //   const [docId, setDocId] = useState('');
 
 
@@ -45,7 +45,6 @@ const Notes = () => {
                     const Notes =[];
                     snapshot.forEach((doc)=>{
                         Notes.push(doc);
-                        setIsPending(false);
                     });
                     setNote(Notes);
                 })
@@ -187,19 +186,21 @@ const Notes = () => {
                     <p className=' font-Labrada text-base'>Sucessfully Saved</p>
                 </div>
             </div>
-            { isPending && <p className=' mt-[32px] font-medium text-lg font-Labrada'>Loading...</p>}
             <div id='notes' className='notes mt-[32px] w-full mx-auto flex flex-col md:flex-row flex-wrap justify-between'>
                 { note.map((doc) =>(
-                    <div className=' h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%]  rounded-[20px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
+                    <motion.div 
+                    initial={{x:250}}
+                    animate={{x:0}}
+                    transition={{type:'spring', stiffness:50}}
+                    className=' h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%]  rounded-[20px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
                         <p className=' font-Labrada w-full font-semibold text-base '>{doc.data().NoteTopic}</p>
                         <p className=' font-Labrada w-full font-medium mt-1 text-base'>{doc.data().NoteDesc}</p>
                         <p className=' font-Labrada w-full font-normal bg-transparent mt-1 text-sm h-[95px] overflow-x-hidden scrollbar'>{doc.data().NoteContent}</p>
-                        <p className='font-Labrada font-medium absolute bottom-4 left-6 text-sm'>Date</p>
                         <span className=' absolute right-6 bottom-4 flex flex-row items-center space-x-2'>
                                 <img src={ edit } onClick={ handleEditClick } className=' w-[20px]' alt="" />
                                 <img src={ trash } onClick={ handleClick } className=' w-[20px]' alt="" />
                             </span>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
             {noteEdit && <div className=' w-[100vw] flex justify-center items-center h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.3)] z-[99999] px-3'>
