@@ -201,10 +201,6 @@ const Notes = () => {
                             </span>
                     </div>
                 ))}
-                <div className=' shadow-sm h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%] rounded-[20px] bg-tr p-6 relative bg-[#f1f1f1] flex justify-center items-center flex-col'>
-                    <button className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#f1f1f1]'><img src={ plus } alt="" /></button>
-                    <p className='font-Labrada font-semibold text-base text-black'>Add New Note</p>
-                </div>
             </div>
             {noteEdit && <div className=' w-[100vw] flex justify-center items-center h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.3)] z-[99999] px-3'>
                 <div className=' bg-[#fff] rounded-[20px] px-6 py-8 w-full md:w-auto'>

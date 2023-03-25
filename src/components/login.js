@@ -62,13 +62,13 @@ const Login = () => {
     checkUser();
 
     return ( 
-        <div className=" bg-[#f1f1f1] w-full h-[100vh] lg:py-[8%] lg:px-[15%]">
+        <div className=" bg-[#f1f1f1] w-full h-[100vh]">
             <div className=" w-full h-full bg-transparent shadow flex flex-row">
                 <div className=" w-1/2 h-full hidden bg-[#fdd037] rounded-l-md p-6 lg:flex justify-center items-center relative">
                     <span className=" flex flex-row space-x-1 absolute top-6 left-6 font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
                     <img src={ nt1 } className=' w-[250px] h-[250px]' alt="" />
                 </div>
-                <div className=" lg:w-1/2 w-full h-full lg:bg-[#fff] bg-[#fdd037] flex flex-col items-center justify-center rounded-r-md p-8 space-y-5 relative">
+                <div className=" lg:w-1/2 w-full h-full lg:bg-[#fff] bg-[#fdd037] flex flex-col items-center justify-center rounded-r-md p-[8%] space-y-5 relative">
                     <span className=" flex lg:hidden flex-row space-x-1  font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
                     <p className=" font-Labrada text-lg lg:mr-auto font-semibold">Welcome Back</p>
                     <div className=" space-y-6 w-full md:w-[350px] lg:w-full relative">

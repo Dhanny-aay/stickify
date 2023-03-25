@@ -35,7 +35,8 @@ const Home = () => {
     const db = getFirestore(app);
 
     // chexk user + get notes
-    const [notes, setNotes] = useState([]);
+    const [mail, setMail] = useState('');
+    const [name, setName] = useState('');
     const [isUser, setisUser] = useState(false)
 
     useEffect(()=>{
@@ -45,17 +46,19 @@ const Home = () => {
                 newUserUid(uid);
                 //get notes
                 //collection ref
-                const colref = collection(db, 'notes');
+                const colref = collection(db, 'users');
                 // queries 
                 const q = query(colref, where('uid', '==', user.uid));
                 onSnapshot(q ,(snapshot) => {
                     snapshot.docs.forEach((doc) => {
-                        setNotes(doc.data());
+                        // setNotes(doc);
+                        setMail(doc.data().email)
+                        setName(doc.data().displayName)
                     });
                   });
             }
             else{
-                //Navigate('/login')
+                Navigate('/login')
             }
         })
     }, []);
@@ -198,10 +201,10 @@ const Home = () => {
                         <img src={ search } className=' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="search" />
                         <div className=' flex flex-col '>
                             <img src={ user } onClick={ handleClick } className=' w-6 lg:w-[32px]  h-6 lg:h-[32px] cursor-pointer' alt="search" />
-                            { isUser && <span className=' lg:top-20 top-16 z-[99] right-6 p-4 absolute bg-[#f1f1f1] shadow'>
+                            { isUser && <span className=' lg:top-20 top-16 z-[99] right-6 p-4 absolute bg-[#f1f1f1] shadow space-y-2'>
                                 <img src={ user } alt="" />
-                                <p className=' font-Labrada text-sm font-medium'>Daniel Akintolu</p>
-                                <p className=' font-Labrada text-sm font-medium'>Danielakintolu@gmail.com</p>
+                                <p className=' font-Labrada text-sm font-medium'>{ name }</p>
+                                <p className=' font-Labrada text-sm font-medium'>{ mail }</p>
                             </span>}
                         </div>
                         <img src={ exit } onClick={ signout } className= ' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="setting" />

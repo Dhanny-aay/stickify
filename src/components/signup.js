@@ -8,6 +8,7 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'fir
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 
 const Signup = () => {
@@ -78,16 +79,19 @@ const Signup = () => {
         checkUser();
 
     return ( 
-        <div className=" bg-[#f1f1f1] w-full h-[100vh] lg:py-[8%] lg:px-[15%]">
-            <div className=" w-full h-full bg-transparent shadow flex flex-row">
+        <div className=" bg-[#f1f1f1] w-full h-[100vh]">
+            <motion.div 
+            initial={{opacity:0}}
+            animate={{opacity:1}}
+            className=" w-full h-full bg-transparent shadow flex flex-row">
                 <div className=" w-1/2 h-full hidden bg-[#fdd037] rounded-l-md p-6 lg:flex justify-center items-center relative">
                     <span className=" flex flex-row space-x-1 absolute top-6 left-6 font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
                     <img src={ nt1 } className=' w-[250px] h-[250px]' alt="" />
                 </div>
-                <div className=" lg:w-1/2 w-full h-full lg:bg-[#fff] bg-[#fdd037] flex flex-col items-center justify-center rounded-r-md p-8 space-y-5 relative">
+                <div className=" lg:w-1/2 w-full h-full lg:bg-[#fff] bg-[#fdd037] flex flex-col items-center justify-center rounded-r-md p-8 px-[8%] space-y-5 relative">
                 <span className=" flex lg:hidden flex-row space-x-1  font-bold font-Tilt text-xl text-[#000]"><p>Stickify</p><p className=" text-[#fff]">.</p></span>
-                    <p className=" font-Labrada text-lg text-left lg:mr-auto font-semibold">Sign Up Before you Continue...</p>
-                    <div className=" space-y-6 w-full md:w-[350px] lg:w-full relative">
+                    <p className=" font-Labrada text-lg text-center font-semibold">Sign Up Before you Continue...</p>
+                    <div className=" space-y-6 w-full md:w-[350px] lg:w-full w-full relative">
                         <input id="name" onKeyUp={ setName } className=" w-full p-2 rounded-md font-normal text-sm font-Labrada bg-[#f1f1f1]" placeholder="Full-Name" type="text" />
                         <input id="mail" onKeyUp={setMail} className="bg-[#f1f1f1] rounded-md w-full p-2 font-normal text-sm font-Labrada" placeholder="Email Address" type="text" />
                         <input id="password" onKeyUp={ setPw } className="w-full p-2 rounded-md font-normal text-sm font-Labrada bg-[#f1f1f1]" placeholder="Password" type="text" />
@@ -106,7 +110,7 @@ const Signup = () => {
                     </div>
                     
                 </div>
-            </div>
+            </motion.div>
         </div>
      );
 }
