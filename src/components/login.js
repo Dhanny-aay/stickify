@@ -57,7 +57,7 @@ const Login = () => {
     useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
             if(user){
-                Navigate('/')
+                Navigate('/notes')
             }
         })
     }, []);

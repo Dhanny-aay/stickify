@@ -8,7 +8,9 @@ module.exports = {
       fontFamily:{
         'Labrada': ['"Labrada"', 'serif'],
         'Montserrat': ['"Montserrat"', 'sans-serif'],
+        'Quicksand': ['"Quicksand"', 'sans-serif'],
         'Tilt': ['"Tilt Warp"', 'cursive'],
+        'Baloo': ['"Baloo 2"', 'cursive'],
       }
     },
   },

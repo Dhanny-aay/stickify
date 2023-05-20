@@ -4,6 +4,7 @@ import Signup from "../src/components/signup";
 import Login from "./components/login";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import LandingPage from "./components/landing";
 
 function App() {
   const location = useLocation();
@@ -12,7 +13,8 @@ function App() {
       <Routes key={location.pathname} location={location}>
         <Route path="/signup" element={ <Signup/> }/>
         <Route path="/login" element={ <Login/> }/>
-        <Route path="/" element={ <Home/> }/>
+        <Route path="/" element={ <LandingPage/> }/>
+        <Route path="/notes" element={ <Home/> }/>
       </Routes>
     </AnimatePresence>
       
