@@ -1,9 +1,19 @@
-import logo from '../images/logo.svg';
+import logo from '../images/logo.png';
 import rightArrow from '../images/arrow-right.svg';
 import flash from '../images/flash.svg';
 import musk from '../images/PlaneRight.png';
 import more from '../images/more.png';
-import hero from '../images/heroImg.svg';
+import hero from '../images/heroImg.png';
+import examse from '../images/examsec.png';
+import examse1 from '../images/examsec1.png';
+import examse2 from '../images/examsec2.png';
+import arrLeft from '../images/arrLeft.png';
+import arrRight from '../images/arrRight.png';
+import rate from '../images/rate.png';
+import addCircle from '../images/addcircle.png';
+import queen from '../images/queen.png';
+import logoBlk from '../images/logoBlk.png';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
     return ( 
@@ -20,13 +30,13 @@ const LandingPage = () => {
                 <p className=' text-base font-Quicksand font-semibold'>Contacts</p>
             </span>
             <span className=' hidden md:flex flex-row space-x-4 items-center'>
-                <p className='text-lg font-Quicksand font-bold'>Sign Up</p>
-                <button className=' w-[170px] h-[60px] pl-5 pr-2 bg-[#121212] rounded-[60px] text-white flex flex-row justify-between items-center'>
+                <Link to='/signup'><p className='text-lg font-Quicksand font-bold'>Sign Up</p></Link>
+                <Link to='/login'><button className=' w-[140px] h-[60px] pl-5 pr-2 bg-[#121212] rounded-[60px] text-white flex flex-row justify-between items-center'>
                     <p className=' text-lg font-Quicksand font-bold '>Sign in</p>
-                    <button className=' w-[50px] h-[50px] rounded-[50%] bg-[#f1f1f1] flex justify-center items-center'>
+                    <button className=' w-[45px] h-[45px] rounded-[50%] bg-[#f1f1f1] flex justify-center items-center'>
                         <img src={ rightArrow } alt="" />
                     </button>
-                </button>
+                </button></Link>
             </span>
             <img src={ more } className='block md:hidden' alt="" />
         </div>
@@ -46,10 +56,10 @@ const LandingPage = () => {
                         <p className='md:w-[350px] w-full font-Quicksand text-sm md:text-[16px] text-[#121212] leading-[25px] font-medium'>Converting your ideas into edited-able sticky notes, make productivity a breeze with Stickify's intuitive note-taking system.</p>
                     </span>
                     <span className=' md:w-[500px] w-full h-[70px] md:h-[80px] relative rounded-[60px] mt-6'>
-                        <input type="text" className=' w-full rounded-[60px] border border-[#121212]  h-full p-3 placeholder:text-lg placeholder:font-semibold placeholder:text-black placeholder:font-Quicksand text-lg font-semibold font-Quicksand text-black' placeholder='Enter Your Mail' />
-                        <button className='absolute top-2 right-1 w-[140px] md:w-[170px] h-[50px] md:h-[60px] pl-5 pr-2 bg-[#121212] rounded-[60px] text-white flex flex-row justify-between items-center'>
+                        <input type="text" className=' w-full rounded-[60px] border border-[#121212]  h-full py-3 px-[24px] placeholder:text-lg placeholder:font-semibold placeholder:text-black placeholder:font-Quicksand text-lg font-semibold font-Quicksand text-black' placeholder='Enter Your Mail' />
+                        <button className='absolute top-[10px] right-[10px] w-[140px] md:w-[140px] h-[65px] md:h-[60px] pl-5 pr-2 bg-[#121212] rounded-[60px] text-white flex flex-row justify-between items-center'>
                             <p className=' text-base md:text-lg font-Quicksand font-bold '>Sign in</p>
-                            <button className=' w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-[50%] bg-[#f1f1f1] flex justify-center items-center'>
+                            <button className=' w-[40px] h-[40px] md:w-[45px] md:h-[45px] rounded-[50%] bg-[#f1f1f1] flex justify-center items-center'>
                                 <img src={ rightArrow } alt="" />
                             </button>
                         </button>
@@ -58,6 +68,119 @@ const LandingPage = () => {
                 <div>
                     <img src={ hero } className=' h-[500px] w-[465px]' alt="" />
                 </div>
+            </div>
+        </div>
+        <div className=' w-full md:p-11 p-5'>
+            <span className=' text-center space-y-2'>
+                <p className=' font-Baloo text-3xl font-semibold'>Our Features</p>
+                <p className=' font-Quicksand text-xl font-normal'>Take Control of Your Tasks and Ideas with Stickify's Customizable Features</p>
+            </span>
+            <div className=' flex flex-row justify-between items-center mt-11 space-x-20'>
+                <img src={ examse } className='' alt="" />
+                <span className=' flex flex-col text-left'>
+                    <p className=' font-Baloo font-semibold text-2xl'>Digital Sticky Notes</p>
+                    <p className=' font-Quicksand text-base font-normal'>Stickify allows users to create and organize digital sticky notes that can be customized to suit their needs. These notes can be easily accessed from any device and are perfect for keeping track of to-do lists, reminders, and important information.</p>
+                </span>
+            </div>
+            <div className=' flex flex-row justify-between items-center mt-11 space-x-20'>
+                <span className=' flex flex-col text-left'>
+                    <p className=' font-Baloo font-semibold text-2xl'>Collaboration Tools</p>
+                    <p className=' font-Quicksand text-base font-normal'>Stickify's collaboration features allow users to share notes and work together on projects in real time. This is perfect for teams or groups who need to stay on the same page and keep everyone up to date on important information. Users can also assign tasks and track progress, making it easy to stay organized and productive.</p>
+                </span>
+                <img src={ examse1 } className='' alt="" />
+            </div>
+            <div className=' flex flex-row justify-between items-center mt-11 space-x-20'>
+                <img src={ examse2 } className='' alt="" />
+                <span className=' flex flex-col text-left'>
+                    <p className=' font-Baloo font-semibold text-2xl'>Editing Tool</p>
+                    <p className=' font-Quicksand text-base font-normal'>Stickify's editing tool allows users to easily modify their notes and customize them to suit their needs. Users can change the font, size, color, and style of their text, as well as add images and drawings to their notes. This makes it easy to create personalized and visually appealing notes that are easy to read and understand.</p>
+                </span>
+            </div>
+        </div>
+        <div className=' w-full md:p-11 p-5 mt-11'>
+            <div className=' flex flex-row justify-between items-center'>
+                <p className=' font-Baloo text-3xl font-semibold'>What our users says</p>
+                <span className='flex flex-row items-center space-x-16'>
+                    <button className='w-[50px] h-[50px] rounded-[50%] bg-transparent border border-[#121212] flex items-center justify-center'><img src={arrLeft} alt="" /></button>
+                    <button className='w-[50px] h-[50px] rounded-[50%] bg-black flex items-center justify-center'><img src={ arrRight } alt="" /></button>
+                </span>
+            </div>
+            <div className='overflow-x-scroll mt-8 scrollbar-hide'>
+                    <div className=' inline-flex space-x-[24px] items-center'>
+                        <div className=' w-[400px] h-[211px] rounded-[30px] bg-[rgba(252,230,129,0.5)] p-8'>
+                            <span className=' flex flex-row '>
+                                <button className=' w-[60px] h-[60px] rounded-[50%] bg-[#2b2e30] mr-4'></button>
+                                <span className=' flex flex-col'>
+                                    <p className=' font-Baloo text-lg space-y-2 font-medium text-[#121212]'>Veek’s Design</p>
+                                    <img src={ rate } alt="" />
+                                </span>
+                            </span>
+                            <p className=' mt-6 text-sm font-Quicksand font-medium text-[rgba(6,0,60,0.8)]'>Stickify is a game-changer! The digital sticky notes and reminder system are essential to my daily routine.</p>
+                        </div>
+                        <div className=' w-[400px] h-[211px] rounded-[30px] bg-[rgba(252,230,129,0.5)] p-8'>
+                            <span className=' flex flex-row '>
+                                <button className=' w-[60px] h-[60px] rounded-[50%] bg-[#2b2e30] mr-4'></button>
+                                <span className=' flex flex-col'>
+                                    <p className=' font-Baloo text-lg space-y-2 font-medium text-[#121212]'>Dan’s Codes</p>
+                                    <img src={ rate } alt="" />
+                                </span>
+                            </span>
+                            <p className=' mt-6 text-sm font-Quicksand font-medium text-[rgba(6,0,60,0.8)]'>Stickify's organization features have helped me become much more productive and organized in my work and personal life..</p>
+                        </div>
+                        <div className=' w-[400px] h-[211px] rounded-[30px] bg-[rgba(252,230,129,0.5)] p-8 flex items-center justify-center flex-col'>
+                            <img src={ addCircle } alt="" />
+                            <p className=' text-xl font-Quicksand font-semibold'>Add a review</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div className=' w-full md:p-11 p-5 z-50 mt-11'>
+            <div className=' w-full h-[350px] z-30 bg-[#fce681] rounded-[50px] flex flex-row items-center justify-between space-x- px-[88px]'>
+                <span className='flex flex-col'>
+                    <p className=' font-Quicksand text-[30px] leading-[48px] font-semibold '>Make productivity a breeze with Stickify's intuitive note-taking system.</p>
+                    <button className=' px-6 py-3 bg-black rounded-[60px] block mr-auto  mt-6 text-xl font-Quicksand font-normal text-white'>Sign Up</button>
+                </span>
+                <img src={ queen } className='' alt="" />
+            </div>
+        </div>
+
+        <div className=' w-full md:p-11 p-5 z-[-99999999999] relative -mt-[144px] bg-[#010101] h-[550px]'>
+            <div className=' mt-[144px] pt-11 flex flex-row justify-between space-x-16 pb-11'>
+                <span className=''>
+                    <span className=' flex flex-row md:space-x-3 items-center'>
+                        <img src={ logoBlk } alt="" />
+                        <p className=" font-Baloo text-[#FCE681] text-xl md:text-3xl font-medium">Stickify</p>
+                    </span>
+                    <p className='text-base font-Quicksand text-[#a5acba] w-[200px] mt-4'>Capture ideas, collaborate with ease, and stay on track with Stickify</p>
+                </span>
+                <span className=' flex space-y-2 flex-col'> 
+                    <p className=' font-semibold text-base font-Quicksand text-[#f9f9f9]'>Resources</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba] mt-2'>Community</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba]'>Events</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba]'>Help Center</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba]'>Partners</p>
+                </span>
+                <span className=' flex space-y-2 flex-col'> 
+                    <p className=' font-semibold text-base font-Quicksand text-[#f9f9f9]'>Products</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba] mt-2'>Integrations</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba]'>Solutions</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba]'>Features</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba]'>Enterprise</p>
+                </span>
+                <span className=' flex space-y-2 flex-col'> 
+                    <p className=' font-semibold text-base font-Quicksand text-[#f9f9f9]'>Get Email Notifications</p>
+                    <p className=' font-medium text-base font-Quicksand text-[#a5acba] mt-2 w-[302px]'>Generate outside the box thinking with the possibility to targtet the low</p>
+                    <span className=' w-[302px] h-[46px] relative rounded-[20px]'>
+                        <input type="email" className=' w-full h-full rounded-[20px] border border-[#2e3545] bg-transparent placeholder:text-[#a5acab] relative text-[#a5acab] placeholder:font-semibold font-semibold text-base placeholder:text-base p-2' placeholder='Enter email...' />
+                        <button className=' absolute top-0 right-0 w-[86px] h-[46px] rounded-r-[20px] bg-[#fce681] text-base text-center font-Quicksand text-[#121212'>Submit</button>
+                    </span>
+                </span>
+            </div>
+            <div className='w-full h-[90px] relative'>
+                <span className=' absolute flex flex-row justify-between items-center  top-0 left-0  w-full h-full border-t border-white'>
+                    <p className=' font-Quicksand text-sm font-normal text-[#a5acba]'>© 2023 Stickify. All Rights Reserved.</p>
+                    <p className=' font-Quicksand text-sm font-normal text-[#a5acba]'>Stickify . Socials</p>
+                </span>
             </div>
         </div>
         </>

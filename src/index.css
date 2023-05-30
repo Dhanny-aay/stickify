@@ -9,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f6f6f6;
 }
 
 code {
@@ -25,4 +26,23 @@ code {
   background-color: slategray;
   outline: 1px solid slategrey;
   border-radius: 5px;
+}
+.scrollBB::-webkit-scrollbar{
+  width: 5px;
+  height: 5px;
+
+}
+.scrollBB::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 6px #d9d9d9;
+}
+.scrollBB::-webkit-scrollbar-thumb{
+  background-color: #121212;
+  outline: 1px solid #121212;
+  border-radius: 5px;
+}
+.below{
+  z-index: -10;
+}
+.above{
+  z-index: 50;
 }

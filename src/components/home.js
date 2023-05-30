@@ -1,9 +1,25 @@
 import search from '../images/search.png';
+import moon from '../images/moon.png';
+import tac from '../images/textalign-center.png';
+import tar from '../images/textalign-right.png';
+import tal from '../images/textalign-left.png';
+import tajl from '../images/textalign-justifyleft.png';
+import tajr from '../images/textalign-justifyright.png';
+import tajc from '../images/textalign-justifycenter.png';
+import sort from '../images/sort.png';
 import user from '../images/user.png';
 import exit from '../images/exit.png';
-import plus from '../images/plus.png';
+import plus from '../images/adder.png';
+import camera from '../images/camera.png';
+import pen from '../images/pen.png';
+import mic from '../images/microphone-2.png';
+import bold from '../images/bold.png';
+import italic from '../images/italic.png';
+import underline from '../images/text-underline.png';
+import link from '../images/link.png';
 import Palette from './palette';
 import close from '../images/close.png';
+import save from '../images/save.png';
 import { useEffect, useState } from 'react';
 import Notes from './notes';
 import saved from '../images/saved.png';
@@ -81,13 +97,24 @@ const Home = () => {
           });
     };
     
+    //date and time
+    // For todays date;
+    Date.prototype.today = function () { 
+        return ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ this.getFullYear();
+    }
+    // For the time now
+    Date.prototype.timeNow = function () {
+        return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes();
+    }
+    const newDate = new Date();
     // popup content
-    const date = new Date();
+    const date =  newDate.today();
+    const time = newDate.timeNow();
     const[userUid, newUserUid] = useState('');
     const[noteTopic, newNoteTopic] = useState('');
     const[noteDesc, newNoteDesc] = useState('');
     const[noteContent, newNoteContent] = useState('');
-    const[noteBg, setNoteBg] = useState('');
+    const[noteBg, setNoteBg] = useState('#FF5722');
 
     function setNoteTopic(){
         let notetopic = document.getElementById('noteTopic').value;
@@ -119,6 +146,8 @@ const Home = () => {
             NoteContent: noteContent,
             NoteBg: noteBg,
             date:date,
+            dateTime:daTim,
+            time:time,
         };
         toggleBg();
         addDoc(noteDoc, docData)
@@ -144,10 +173,15 @@ const Home = () => {
     // dom manipulation for popup 
     const[showPopup, setShowPopup] = useState(false);
     const[showBg, setShowBg] = useState(true);
+    const[ editPanel, setEditPanel] = useState(false);
+    const [daTim, setDaTim] = useState('')
+
+
     const togglePopup = ()=>{
         if(showPopup === false){
             setShowPopup(true);
             setShowBg(false);
+            setDaTim(time+', '+date);
         };
     };
     function toggleBg(){
@@ -162,7 +196,7 @@ const Home = () => {
             animate={{x:0, opacity:1}}
             exit={{x:-100, opacity:0}}
             transition={{delay:0.3}}
-        >
+         className=' bg-[#f6f6f6]'>
             <div id='saveWarn' className=' translate-x-[100vw] transition-all  bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
                 <div className=' w-[30%] h-full bg-[#fdd037] rounded-l-md flex justify-center  items-center'>
                     <img src={ saved } alt="" className=' w-6' />
@@ -171,39 +205,68 @@ const Home = () => {
                     <p className=' font-Labrada text-base'>Sucessfully Saved</p>
                 </div>
             </div>
-           {showPopup && <div id='popUp' className="w-full absolute bg-white lg:py-[35px] lg:px-[80px] p-6 top-0 left-0 z-50">
+           {showPopup && <div id='popUp' className="w-full absolute bg-[#fff] lg:py-[35px] lg:px-[80px] p-6 top-0 left-0 z-50 h-[100vh]">
                 <div className=" navbar flex flex-row justify-between items-center">
-                        <p className=' font-Labrada lg:text-3xl text-xl font-bold'>Create Note</p>
-                        <span className=" flex flex-row justify-center items-center">
-                            <img src={ close } onClick={ toggleBg } className=' w-[32px] h-[32px] cursor-pointer' alt="close" />
-                        </span>
+                    <img src={ close } onClick={ toggleBg } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />
+                    <img src={ save } onClick={ saveNote } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />
                 </div>
                 <div className=' md:mt-[24px] mt-8'>
-                    <div className=' w-full flex md:flex-row flex-col mt-4 justify-between md:space-y-0'>
-                        <div className=' md:w-[50%] w-full h-[250px] mr-5 flex flex-col space-y-3'>
-                            <div className=''>
-                                <p className=' font-Labrada font-medium text-lg'>Topic</p>
-                                <input onKeyUp={setNoteTopic} id='noteTopic' type="text" className=' font-normal text-sm p-3 font-Labrada bg-[#f1f1f1] rounded-[20px] w-full md:h-[60px] h-12 mt-[6px]' />
-                            </div>
-                            <div className=''>
-                                <p className=' font-Labrada font-medium text-lg'>Description : Max length(32)</p>
-                                <input onKeyUp={setNoteDesc} maxLength='32' id='noteDesc' type="text" className=' p-3 font-Labrada font-normal text-sm bg-[#f1f1f1] whitespace-pre rounded-[20px] w-full md:h-[150px] h-28 mt-[6px]' />
-                            </div>
+                    <div className=' w-full flex flex-col mt-4 md:space-y-0'>
+                        <div className=''>
+                            <input onKeyUp={setNoteTopic} placeholder='Topic...' id='noteTopic' type="text" className=' font-normal text-xl p-3 font-Baloo w-[300px] bg-transparent mt-[6px] text-[#121212] placeholder:text-[#121212]' />
                         </div>
-                        <div className=' md:w-[50%] w-full md:h-[250px] h-48 md:ml-5'>
-                            <p className=' font-Labrada font-medium text-lg '>Note</p>
-                            <textarea onKeyUp={setNoteContent} id="noteContent" className='bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm' cols="30" rows="10"></textarea>
-                            {/* <input onKeyUp={setNoteContent} id='noteContent' className=' bg-[#f1f1f1] w-full h-full mt-3 rounded-[20px] p-3 font-Labrada font-normal text-sm'/> */}
+                        <div className=''>
+                            <input readOnly value={ daTim } type="text" className=' p-3 bg-transparent font-Quicksand font-normal text-sm mt-[0px]' />
+                        </div>
+                        <div className=' w-full'>
+                            <textarea onKeyUp={setNoteContent} id="noteContent" className='w-full h-[50vh] p-3 font-Quicksand font-normal text-base bg-transparent' placeholder='Note content here....' cols="30" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
-                <Palette GetnoteBgColor={noteBgColor}/>
-                <button onClick={ saveNote } className=' px-4 py-2 font-Labrada text-base font-semibold bg-[#f1f1f1] rounded-[10px] mb-11 mt-6 '>Save Note</button>
+                <div className='w-full flex justify-center items-center fixed right-0 left-0 bottom-6'>
+                    <div className=' w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[80px] bg-[rgba(18,18,18,0.1)] rounded-[120px]'>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ plus } className=' w-8' alt="" /></motion.button>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ camera } className=' w-8' alt="" /></motion.button>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} onClick={()=>{setEditPanel(true)}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ pen } className=' w-6 h-8' alt="" /></motion.button>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ mic } className=' w-8' alt="" /></motion.button>
+                    </div>
+                </div>
+                { editPanel && <div className=' fixed bottom-6 left-0 right-[0px] flex justify-center items-center px-2 md:px-[100px]'>
+                    <div className=' w-full bg-[#f5f5f5] p-5 rounded-[50px] relative'>
+                        <div className=' w-full absolute top-1 flex justify-center items-center'>
+                            <img src={ sort } onClick={()=>{setEditPanel(false)}} className=' w-[32px]' alt="" />
+                        </div>
+                        <Palette GetnoteBgColor={noteBgColor}/>
+                        <div className=' flex justify-between items-center mt-3'>
+                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ bold } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ italic } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ underline } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ link } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                        </div>
+                        <div className=' w-full h-[50px] bg-white rounded-[50px] mt-3 flex justify-between items-center px-4'>
+                            <img src={ tac } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                            <img src={ tar } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                            <img src={ tal } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                            <img src={ tajr } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                            <img src={ tajc } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                            <img src={ tajl } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                        </div>
+                    </div>
+                </div>}
             </div>}
-          { showBg && <div id='bg' className=" lg:py-[35px] lg:px-[80px] p-6 relative">
+          { showBg && <div id='bg' className=" bg-[#f6f6f6] lg:py-[35px] w-full lg:px-[80px] p-6 relative">
                 <div className=" navbar flex flex-row justify-between items-center">
-                    <p className=' font-Labrada lg:text-3xl text-xl font-bold'>My Notes</p>
-                    <span className=" flex flex-row space-x-3 md:space-x-5">
+                    <p className=' font-Baloo lg:text-3xl text-xl font-bold'>My Notes</p>
+                    <span className=" flex flex-row items-center space-x-3 md:space-x-5">
+                        <img src={ moon } className='' alt="" />
                         <div className=' flex flex-col '>
                             <img src={ user } onClick={ handleClick } className=' w-6 lg:w-[32px]  h-6 lg:h-[32px] cursor-pointer' alt="search" />
                             { isUser && <motion.span 
@@ -219,11 +282,26 @@ const Home = () => {
                         <img src={ exit } onClick={ signout } className= ' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="setting" />
                     </span>
                 </div>
-                <Notes/>
-                <motion.button 
-                initial={{scale:1}}
-                whileHover={{scale:1.1}}
-                onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#f1f1f1] shadow fixed bottom-6 right-6 md:bottom-16 md:right-16'><img src={ plus } alt="" /></motion.button>
+                <input placeholder='Search for Notes...' type="text" className=' mt-2 w-[300px] h-[45px] rounded-[42px] bg-white py-2 px-5 font-Quicksand placeholder:font-Quicksand font-normal text-base placeholder:text-[rgba(18,18,18,0.6)]' />
+                <div className=' w-full h-[70vh] mt-5 overflow-scroll pr-3 lg:pr-8 scrollBB'>
+                    <Notes/>
+                </div>
+                <div className='w-full flex justify-center items-center left-0 right-0 fixed bottom-4 md:bottom-10 lg:bottom-6'>
+                    <div className=' w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[80px] bg-[rgba(18,18,18,0.1)] rounded-[120px]'>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ plus } className=' w-8' alt="" /></motion.button>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ camera } className=' w-8' alt="" /></motion.button>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ pen } className=' w-6 h-8' alt="" /></motion.button>
+                        <motion.button 
+                        initial={{scale:1}}
+                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'><img src={ mic } className=' w-8' alt="" /></motion.button>
+                    </div>
+                </div>
             </div>}
         </motion.div>
      );

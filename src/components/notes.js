@@ -6,7 +6,7 @@ import trash from '../images/trash.png';
 import edit from '../images/edit.png';
 import { useEffect, useState } from 'react';
 import '../index.css';
-import plus from '../images/plus.png';
+import sort from '../images/sort.png';
 import bin from '../images/rubbish.png';
 import { motion } from 'framer-motion';
 
@@ -105,9 +105,9 @@ const Notes = () => {
         const docId = bin.parentElement.getAttribute('id');
         setNoteId(docId);
         const elements = bin.parentElement.children;
-        const top = elements[0].innerHTML;
-        const desc = elements[1].innerHTML;
-        const cont = elements[2].innerHTML;
+        const top = elements[1].innerHTML;
+        const desc = elements[2].innerHTML;
+        const cont = elements[3].innerHTML;
         setTopic(top);
         setDesc(desc);
         setContent(cont);
@@ -158,7 +158,7 @@ const Notes = () => {
 }
 
     return ( 
-        <div className=''>
+        <div className=' w-full'>
             {popup && <div className=' fixed h-[100vh] top-0 left-0 w-[100vw] bg-[rgba(0,0,0,0.3)] z-[99999] flex justify-center items-center'>
                 <div className=' bg-[#f1f1f1] py-6 px-10 rounded-[20px] flex flex-col justify-center items-center relative'>
                     <p className=' font-Labrada text-lg font-semibold'>You are about to delete a note</p>
@@ -186,20 +186,19 @@ const Notes = () => {
                     <p className=' font-Labrada text-base'>Sucessfully Saved</p>
                 </div>
             </div>
-            <div id='notes' className='notes mt-[32px] w-full mx-auto flex flex-col md:flex-row flex-wrap justify-between'>
+            <div id='notes' className='notes w-auto mx-auto space-x-1 flex md:flex-row flex-wrap justify-between '>
                 { note.map((doc) =>(
-                    <motion.div 
+                    <motion.div
                     initial={{x:250}}
                     animate={{x:0}}
                     transition={{type:'spring', stiffness:50}}
-                    className=' h-[220px] my-[15px] md:flex-[0_1_30%] md:w-[30%] lg:w-[28%] lg:flex-[0_1_28%]  rounded-[20px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
-                        <p className=' font-Labrada w-full font-semibold text-base '>{doc.data().NoteTopic}</p>
-                        <p className=' font-Labrada w-full font-medium mt-1 text-base'>{doc.data().NoteDesc}</p>
-                        <p className=' font-Labrada w-full font-normal bg-transparent mt-1 text-sm h-[95px] overflow-x-hidden scrollbar'>{doc.data().NoteContent}</p>
-                        <span className=' absolute right-6 bottom-4 flex flex-row items-center space-x-2'>
-                                <img src={ edit } onClick={ handleEditClick } className=' w-[20px]' alt="" />
-                                <img src={ trash } onClick={ handleClick } className=' w-[20px]' alt="" />
-                            </span>
+                    className=' h-[150px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
+                        <div className=' w-full absolute top-1 right-0 left-0 flex justify-center items-center'>
+                            <img src={ sort } className=' w-[32px]' alt="" />
+                        </div>
+                        <p className=' font-Quicksand w-full font-semibold text-sm md:text-base '>{doc.data().NoteTopic}</p>
+                        <p className=' font-Quicksand w-full font-medium mt-1 text-sm md:text-base'>{doc.data().dateTime}</p>
+                        <p className=' font-Quicksand  w-full font-normal bg-transparent mt-1 text-xs md:text-sm'>{doc.data().NoteContent}</p>
                     </motion.div>
                 ))}
             </div>
