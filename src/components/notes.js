@@ -198,7 +198,7 @@ const Notes = () => {
                         </div>
                         <p className=' font-Quicksand w-full font-semibold text-sm md:text-base '>{doc.data().NoteTopic}</p>
                         <p className=' font-Quicksand w-full font-medium mt-1 text-sm md:text-base'>{doc.data().dateTime}</p>
-                        <p className=' font-Quicksand  w-full font-normal bg-transparent mt-1 text-xs md:text-sm'>{doc.data().NoteContent}</p>
+                        <p className=' font-Quicksand overflow-hidden w-full font-normal bg-transparent mt-1 text-xs md:text-sm mb-6'>{doc.data().NoteContent}</p>
                     </motion.div>
                 ))}
             </div>
