@@ -105,7 +105,9 @@ const Home = () => {
             // An error happened.
           });
     };
+    const body = document.body;
     const [bgColor, setBgColor] = useState(''); 
+    const [popupColor, setPopupColor] = useState('');
     const [btnColor, setBtnColor] = useState('');
     const [textColor, setTextColor] = useState(''); 
     const [searchColor, setSearchColor] = useState(''); 
@@ -113,7 +115,9 @@ const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
     useEffect(()=>{
         if(darkMode){
+            body.style.background = '#1e1e1e';
             setBgColor('#1e1e1e');
+            setPopupColor('#1e1e1e')
             setSearchColor('#232323');
             setTextColor('#f1f1f1');
             setBtnColor('#121212');
@@ -121,10 +125,12 @@ const Home = () => {
             
         }
         else if(!darkMode){
+            body.style.background = '#f6f6f6';
             setBgColor('#f6f6f6');
+            setPopupColor('#fff')
             setSearchColor('#ffffff');
             setTextColor('#000');
-            setBtnColor('#ffffff');
+            setBtnColor('#fff');
             setOverColor('rgba(18,18,18,0.1)');
         }
     }, [darkMode])
@@ -237,7 +243,7 @@ const Home = () => {
                     <p className=' font-Labrada text-base'>Sucessfully Saved</p>
                 </div>
             </div>
-           {showPopup && <div id='popUp' className="w-full absolute bg-[#fff] lg:py-[35px] lg:px-[80px] p-6 top-0 left-0 z-50 h-[100vh]">
+           {showPopup && <div id='popUp' style={{background:popupColor}} className="w-full absolute lg:py-[35px] lg:px-[80px] p-6 top-0 left-0 z-50 h-[100vh]">
                 <div className=" navbar flex flex-row justify-between items-center">
                     { darkMode === false && <img src={ close } onClick={ toggleBg } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />}
                     { darkMode === true && <img src={ whiteClose } onClick={ toggleBg } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />}
@@ -247,39 +253,39 @@ const Home = () => {
                 <div className=' md:mt-[24px] mt-8'>
                     <div className=' w-full flex flex-col mt-4 md:space-y-0'>
                         <div className=''>
-                            <input onKeyUp={setNoteTopic} placeholder='Topic...' id='noteTopic' type="text" className=' font-normal text-xl p-3 font-Baloo w-[300px] bg-transparent mt-[6px] text-[#121212] placeholder:text-[#121212]' />
+                            <input style={{color:textColor}} onKeyUp={setNoteTopic} placeholder='Topic...' id='noteTopic' type="text" className=' font-normal text-xl p-3 font-Baloo w-[300px] bg-transparent mt-[6px]' />
                         </div>
                         <div className=''>
-                            <input readOnly value={ daTim } type="text" className=' p-3 bg-transparent font-Quicksand font-normal text-sm mt-[0px]' />
+                            <input readOnly style={{color:textColor}} value={ daTim } type="text" className=' p-3 bg-transparent font-Quicksand font-normal text-sm mt-[0px]' />
                         </div>
                         <div className=' w-full'>
-                            <textarea onKeyUp={setNoteContent} id="noteContent" className='w-full h-[50vh] p-3 font-Quicksand font-normal text-base bg-transparent' placeholder='Note content here....' cols="30" rows="10"></textarea>
+                            <textarea onKeyUp={setNoteContent} style={{color:textColor}} id="noteContent" className='w-full h-[50vh] p-3 font-Quicksand font-normal text-base bg-transparent' placeholder='Note content here....' cols="30" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
                 <div className='w-full flex justify-center items-center fixed right-0 left-0 bottom-6'>
-                    <div className=' w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[80px] bg-[rgba(18,18,18,0.1)] rounded-[120px]'>
+                    <div style={{background:overColor}} className=' w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[80px] bg-[rgba(18,18,18,0.1)] rounded-[120px]'>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
                             { darkMode === false &&<img src={ plus } className=' w-8' alt="" />}
                             { darkMode === true &&<img src={ whitePlus } className=' w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
                             { darkMode === false &&<img src={ camera } className=' w-8' alt="" />}
                             { darkMode === true &&<img src={ whiteCamera } className=' w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} onClick={()=>{setEditPanel(true)}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} onClick={()=>{setEditPanel(true)}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
                             {darkMode === false && <img src={ pen } className=' w-6 h-8' alt="" />}
                             {darkMode === true && <img src={ whitePen } className=' w-6 h-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
                             { darkMode === false &&<img src={ mic } className=' w-8' alt="" />}
                             { darkMode === true &&<img src={ whiteMic } className=' w-8' alt="" />}
                         </motion.button>
@@ -336,31 +342,31 @@ const Home = () => {
                 <div className=' w-full h-[70vh] mt-5 overflow-scroll pr-3 lg:pr-8 scrollBB'>
                     <Notes/>
                 </div>
-                <div className='w-full flex justify-center items-center left-0 right-0 fixed bottom-4 md:bottom-10 lg:bottom-6'>
-                    <div style={{background:overColor}} className=' w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[80px] rounded-[120px]'>
+                <div className='w-full flex justify-center items-center left-0 right-0 fixed bottom-4 md:bottom-10 px-6 md:px-0 lg:bottom-6'>
+                    <div style={{background:overColor}} className=' w-full md:w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[70px] md:h-[80px] rounded-[120px]'>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{bgColor:btnColor}} onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] shadow'>
-                            { darkMode === false &&<img src={ plus } className=' w-8' alt="" />}
-                            { darkMode === true &&<img src={ whitePlus } className=' w-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background : btnColor}} onClick={ togglePopup } className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                            { darkMode === false &&<img src={ plus } className=' w-6 md:w-8' alt="" />}
+                            { darkMode === true &&<img src={ whitePlus } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{bgColor:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] shadow'>
-                            { darkMode === false &&<img src={ camera } className=' w-8' alt="" />}
-                            { darkMode === true &&<img src={ whiteCamera } className=' w-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                            { darkMode === false &&<img src={ camera } className=' w-6 md:w-8' alt="" />}
+                            { darkMode === true &&<img src={ whiteCamera } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{bgColor:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] shadow'>
-                            {darkMode === false && <img src={ pen } className=' w-6 h-8' alt="" />}
-                            {darkMode === true && <img src={ whitePen } className=' w-6 h-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                            {darkMode === false && <img src={ pen } className='w-4 md:w-6 h-6 md:h-8' alt="" />}
+                            {darkMode === true && <img src={ whitePen } className=' w-4 md:w-6 h-6 md:h-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{bgColor:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] shadow'>
-                            { darkMode === false &&<img src={ mic } className=' w-8' alt="" />}
-                            { darkMode === true &&<img src={ whiteMic } className=' w-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                            { darkMode === false &&<img src={ mic } className=' w-6 md:w-8' alt="" />}
+                            { darkMode === true &&<img src={ whiteMic } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                     </div>
                 </div>
