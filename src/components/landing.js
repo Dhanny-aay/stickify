@@ -17,10 +17,35 @@ import logoBlk from '../images/logoBlk.png';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
+    function overlay(){
+        //check classlist
+        const overlayDiv = document.getElementById('overlay');
+        if(overlayDiv.classList.contains('-translate-y-[500px]')){
+            overlayDiv.classList.remove('-translate-y-[500px]')
+        }
+        else if(!overlayDiv.classList.contains('-translate-y-[500px]')){
+            overlayDiv.classList.add('-translate-y-[500px]')
+        }
+    };
+
+
     return ( 
+
         <>
-        <div className=" flex flex-row justify-between items-center md:px-10 md:py-6 px-4 py-2">
-            <span className=' flex flex-row md:space-x-1 items-center'>
+        <div id="overlay" className=" w-full bg-[#ffffffd3] backdrop-blur-sm h-[500px] flex justify-center items-center -translate-y-[500px] shadow transition-all duration-500 absolute z-[40]">
+            <div className=" flex flex-col justify-center items-center space-y-5">
+                <p className=" font-Quicksand text-base text-black font-medium">View</p>
+                <p className=" font-Quicksand text-base text-black font-medium">Sale</p>
+                <p className=" font-Quicksand text-base text-black font-medium">About</p>
+                <p className=" font-Quicksand text-base text-black font-medium">Contact</p>
+            </div>
+            <span className=' absolute bottom-5 flex flex-row space-x-3 -ml-[62px] font-medium'>
+                    <Link to='/login'><button className=' px-3 py-2 text-center text-black font-Quicksand text-base rounded-md'>Sign-in</button></Link>
+                    <Link to='/signup'><button className=' px-3 py-2 text-center text-white font-Quicksand text-base bg-[#121212] rounded-md'>Sign Up</button></Link>
+            </span>
+        </div>
+        <div className=" flex flex-row justify-between items-center md:px-10 md:py-6 px-4 py-2 z-[9999999999]">
+            <span className=' flex flex-row md:space-x-1 items-center z-[9999999999]'>
                 <img src={ logo } className=' w-[32px] h-[32px] md:w-auto md:h-auto' alt="" />
                 <p className=" font-Baloo text-xl md:text-2xl font-medium">Stickify</p>
             </span>
@@ -28,7 +53,6 @@ const LandingPage = () => {
                 <p className=' text-base font-Quicksand font-semibold'>Home</p>
                 <p className=' text-base font-Quicksand font-semibold'>Feature</p>
                 <p className=' text-base font-Quicksand font-semibold'>About</p>
-                <p className=' text-base font-Quicksand font-semibold'>Contacts</p>
             </span>
             <span className=' hidden md:flex flex-row space-x-4 items-center'>
                 <Link to='/signup'><p className='text-lg font-Quicksand font-bold'>Sign Up</p></Link>
@@ -39,7 +63,7 @@ const LandingPage = () => {
                     </button>
                 </button></Link>
             </span>
-            <img src={ more } className='block md:hidden' alt="" />
+            <img src={ more } onClick={ overlay } className='block md:hidden z-[9999999999]' alt="" />
         </div>
         <div className=' w-full md:p-11 p-5'>
             <div className='flex flex-col md:flex-row justify-between'>
