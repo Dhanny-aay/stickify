@@ -108,6 +108,7 @@ const Home = () => {
     const body = document.body;
     const [bgColor, setBgColor] = useState(''); 
     const [popupColor, setPopupColor] = useState('');
+    const [formatColor, setFormatColor] = useState('');
     const [btnColor, setBtnColor] = useState('');
     const [textColor, setTextColor] = useState(''); 
     const [searchColor, setSearchColor] = useState(''); 
@@ -117,7 +118,8 @@ const Home = () => {
         if(darkMode){
             body.style.background = '#1e1e1e';
             setBgColor('#1e1e1e');
-            setPopupColor('#1e1e1e')
+            setPopupColor('#1e1e1e');
+            setFormatColor('#303030')
             setSearchColor('#232323');
             setTextColor('#f1f1f1');
             setBtnColor('#121212');
@@ -127,7 +129,8 @@ const Home = () => {
         else if(!darkMode){
             body.style.background = '#f6f6f6';
             setBgColor('#f6f6f6');
-            setPopupColor('#fff')
+            setPopupColor('#fff');
+            setFormatColor('#f6f6f6')
             setSearchColor('#ffffff');
             setTextColor('#000');
             setBtnColor('#fff');
@@ -264,52 +267,52 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='w-full flex justify-center items-center fixed right-0 left-0 bottom-6'>
-                    <div style={{background:overColor}} className=' w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[80px] bg-[rgba(18,18,18,0.1)] rounded-[120px]'>
+                    <div style={{background:overColor}} className=' w-full md:w-[400px] p-6 flex justify-between items-center backdrop-blur-[20px] h-[70px] md:h-[80px] rounded-[120px]'>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} onClick={ togglePopup } className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
-                            { darkMode === false &&<img src={ plus } className=' w-8' alt="" />}
-                            { darkMode === true &&<img src={ whitePlus } className=' w-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} onClick={ togglePopup } className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow blur-[2px]'>
+                            { darkMode === false &&<img src={ plus } className=' w-6 md:w-8' alt="" />}
+                            { darkMode === true &&<img src={ whitePlus } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
-                            { darkMode === false &&<img src={ camera } className=' w-8' alt="" />}
-                            { darkMode === true &&<img src={ whiteCamera } className=' w-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow blur-[2px]'>
+                            { darkMode === false &&<img src={ camera } className=' w-6 md:w-8' alt="" />}
+                            { darkMode === true &&<img src={ whiteCamera } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} onClick={()=>{setEditPanel(true)}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
-                            {darkMode === false && <img src={ pen } className=' w-6 h-8' alt="" />}
-                            {darkMode === true && <img src={ whitePen } className=' w-6 h-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} onClick={()=>{setEditPanel(true)}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                            {darkMode === false && <img src={ pen } className=' w-4 md:w-6 h-6 md:h-8' alt="" />}
+                            {darkMode === true && <img src={ whitePen } className=' w-4 md:w-6 h-6 md:h-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[60px] h-[60px] flex justify-center items-center rounded-[50%] bg-[#fff] shadow'>
-                            { darkMode === false &&<img src={ mic } className=' w-8' alt="" />}
-                            { darkMode === true &&<img src={ whiteMic } className=' w-8' alt="" />}
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow blur-[2px]'>
+                            { darkMode === false &&<img src={ mic } className=' w-6 md:w-8' alt="" />}
+                            { darkMode === true &&<img src={ whiteMic } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                     </div>
                 </div>
-                { editPanel && <div className=' fixed bottom-6 left-0 right-[0px] flex justify-center items-center px-2 md:px-[100px]'>
-                    <div className=' w-full bg-[#f5f5f5] p-5 rounded-[50px] relative'>
+                { editPanel && <div  className=' fixed bottom-6 left-0 right-[0px] flex justify-center items-center px-2 md:px-[100px]'>
+                    <div style={{background:formatColor}} className=' w-full bg-[#303030] p-5 rounded-[50px] relative'>
                         <div className=' w-full absolute top-1 flex justify-center items-center'>
                             <img src={ sort } onClick={()=>{setEditPanel(false)}} className=' w-[32px]' alt="" />
                         </div>
                         <Palette GetnoteBgColor={noteBgColor}/>
                         <div className=' flex justify-between items-center mt-3'>
-                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ bold } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
-                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ italic } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
-                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ underline } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
-                            <button className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px]'><img src={ link } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button style={{background:btnColor}} className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px] blur-[2px]'><img src={ bold } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button style={{background:btnColor}} className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px] blur-[2px]'><img src={ italic } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button style={{background:btnColor}} className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px] blur-[2px]'><img src={ underline } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
+                            <button style={{background:btnColor}} className=' w-[70px] h-[50px] flex items-center justify-center bg-white rounded-[50px] blur-[2px]'><img src={ link } className=' w-[24px] h-[24px] md:w-auto md:h-auto' alt="" /></button>
                         </div>
-                        <div className=' w-full h-[50px] bg-white rounded-[50px] mt-3 flex justify-between items-center px-4'>
-                            <img src={ tac } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
-                            <img src={ tar } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
-                            <img src={ tal } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
-                            <img src={ tajr } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
-                            <img src={ tajc } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
-                            <img src={ tajl } className=' md:w-auto md:h-auto w-[24px] h-[24px]' alt="" />
+                        <div style={{background:btnColor}} className=' w-full h-[50px] bg-white rounded-[50px] mt-3 flex justify-between items-center px-4'>
+                            <img src={ tac } className=' md:w-auto md:h-auto w-[24px] h-[24px] blur-[2px]'alt="" />
+                            <img src={ tar } className=' md:w-auto md:h-auto w-[24px] h-[24px] blur-[2px]'alt="" />
+                            <img src={ tal } className=' md:w-auto md:h-auto w-[24px] h-[24px] blur-[2px]' alt="" />
+                            <img src={ tajr } className=' md:w-auto md:h-auto w-[24px] h-[24px] blur-[2px]' alt="" />
+                            <img src={ tajc } className=' md:w-auto md:h-auto w-[24px] h-[24px] blur-[2px]' alt="" />
+                            <img src={ tajl } className=' md:w-auto md:h-auto w-[24px] h-[24px] blur-[2px]' alt="" />
                         </div>
                     </div>
                 </div>}
@@ -339,7 +342,7 @@ const Home = () => {
                     </span>
                 </div>
                 <input style={{background:searchColor, color:textColor}} placeholder='Search for Notes...' type="text" className=' mt-2 w-[300px] h-[45px] rounded-[42px] py-2 px-5 font-Quicksand placeholder:font-Quicksand font-normal text-base' />
-                <div className=' w-full h-[70vh] mt-5 overflow-scroll pr-3 lg:pr-8 scrollBB'>
+                <div className=' w-full h-[70vh] scrollbar-hide md:scrollbar mt-5 overflow-scroll pr-3 lg:pr-8 scrollBB'>
                     <Notes/>
                 </div>
                 <div className='w-full flex justify-center items-center left-0 right-0 fixed bottom-4 md:bottom-10 px-6 md:px-0 lg:bottom-6'>
@@ -352,19 +355,19 @@ const Home = () => {
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] blur-[2px] shadow'>
                             { darkMode === false &&<img src={ camera } className=' w-6 md:w-8' alt="" />}
                             { darkMode === true &&<img src={ whiteCamera } className=' w-6 md:w-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] blur-[2px] shadow'>
                             {darkMode === false && <img src={ pen } className='w-4 md:w-6 h-6 md:h-8' alt="" />}
                             {darkMode === true && <img src={ whitePen } className=' w-4 md:w-6 h-6 md:h-8' alt="" />}
                         </motion.button>
                         <motion.button 
                         initial={{scale:1}}
-                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] shadow'>
+                        whileHover={{scale:1.1}} style={{background:btnColor}} className=' w-[50px] md:w-[60px] h-[50px] md:h-[60px] flex justify-center items-center rounded-[50%] blur-[2px] shadow'>
                             { darkMode === false &&<img src={ mic } className=' w-6 md:w-8' alt="" />}
                             { darkMode === true &&<img src={ whiteMic } className=' w-6 md:w-8' alt="" />}
                         </motion.button>

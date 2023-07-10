@@ -26,6 +26,13 @@ module.exports = {
           '&::-webkit-scrollbar': {
             display: 'none'
           }
+        },
+        '.scrollbar':{
+          '-ms-overflow-style':'block',
+          'scrollbar-width': 'block',
+          '&::-webkit-scrollbar': {
+            display: 'block'
+          }
         }
       })
     }),
