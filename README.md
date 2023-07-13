@@ -1,6 +1,6 @@
 # Stickify
 
-![Stickify Screenshot](https://i.ibb.co/9YMQWb4/stickify-screenshot.png)
+![Stickify Screenshot](stickify.jpg)
 
 Stickify is a web app designed to help you stay organized and keep track of your tasks. With its intuitive interface and powerful features, managing your to-do lists has never been easier.
 
