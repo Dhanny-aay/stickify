@@ -11,7 +11,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f6f6f6;
 }
-
+.centered {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

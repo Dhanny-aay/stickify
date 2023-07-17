@@ -341,7 +341,7 @@ const Home = () => {
                         { darkMode === true && <img src={ whiteExit } onClick={ signout } className= ' w-6  h-6 lg:h-[32px] lg:w-[32px] cursor-pointer' alt="setting" />}
                     </span>
                 </div>
-                <input style={{background:searchColor, color:textColor}} placeholder='Search for Notes...' type="text" className=' mt-2 w-[300px] h-[45px] rounded-[42px] py-2 px-5 font-Quicksand placeholder:font-Quicksand font-normal text-base' />
+                <input style={{background:searchColor, color:textColor}} placeholder='Search for Notes...' type="text" className=' mt-4 w-full md:w-[300px] h-[45px] rounded-[42px] py-2 px-5 font-Quicksand placeholder:font-Quicksand font-normal text-base' />
                 <div className=' w-full h-[70vh] scrollbar-hide md:scrollbar mt-5 overflow-scroll pr-3 lg:pr-8 scrollBB'>
                     <Notes/>
                 </div>

@@ -161,12 +161,12 @@ const Notes = () => {
         <div className=' w-full'>
             {popup && <div className=' fixed h-[100vh] top-0 left-0 w-[100vw] bg-[rgba(0,0,0,0.3)] z-[99999] flex justify-center items-center'>
                 <div className=' bg-[#f1f1f1] py-6 px-10 rounded-[20px] flex flex-col justify-center items-center relative'>
-                    <p className=' font-Labrada text-lg font-semibold'>You are about to delete a note</p>
-                    <p className=' font-Labrada text-base text-gray-500 font-medium mt-3'>This will delete your note permanently</p>
-                    <p className=' font-Labrada text-base text-gray-500 font-medium'>Are you Sure?</p>
+                    <p className=' font-Quicksand text-lg font-semibold'>You are about to delete a note</p>
+                    <p className=' font-Quicksand text-base text-gray-500 font-medium mt-3'>This will delete your note permanently</p>
+                    <p className=' font-Quicksand text-base text-gray-500 font-medium'>Are you Sure?</p>
                     <span className='  flex space-x-4 mt-3'>
-                        <input type="button" onClick={getDelValue} value="Cancel" className=' font-Labrada' />
-                        <input type="button" onClick={getDelValue} value="Delete" className=' px-2 py-1 text-white bg-red-700 rounded-md font-Labrada' />
+                        <input type="button" onClick={getDelValue} value="Cancel" className=' font-Quicksand' />
+                        <input type="button" onClick={getDelValue} value="Delete" className=' px-2 py-1 text-white bg-red-700 rounded-md font-Quicksand' />
                     </span>
                 </div>
             </div>}
@@ -175,7 +175,7 @@ const Notes = () => {
                     <img src={ bin } alt="" className=' w-6' />
                 </div>
                 <div className=' flex justify-center items-center p-2'>
-                    <p className=' font-Labrada text-base'>Sucessfully Deleted</p>
+                    <p className=' font-Quicksand text-base'>Sucessfully Deleted</p>
                 </div>
             </div>
             <div id='upWarn' className=' translate-x-[100vw] transition-all duration-75 bg-[#f1f1f1] rounded-md md:w-[250px] md:h-[90px] w-[200px] h-[80px] flex flex-row fixed right-10 top-[10%] z-[9999999]'>
@@ -183,7 +183,7 @@ const Notes = () => {
                     <img src={ bin } alt="" className=' w-6' />
                 </div>
                 <div className=' flex justify-center items-center p-2'>
-                    <p className=' font-Labrada text-base'>Sucessfully Saved</p>
+                    <p className=' font-Quicksand text-base'>Sucessfully Saved</p>
                 </div>
             </div>
             <div id='notes' className='notes w-auto mx-auto space-x-1 flex md:flex-row flex-wrap justify-between '>
@@ -192,13 +192,17 @@ const Notes = () => {
                     initial={{x:250}}
                     animate={{x:0}}
                     transition={{type:'spring', stiffness:50}}
-                    className=' h-[150px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
-                        <div className=' w-full absolute top-1 right-0 left-0 flex justify-center items-center'>
+                    className=' h-[200x] md:h-[150px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
+                        <div className=' w-full absolute top-2 right-0 left-0 flex justify-center items-center'>
                             <img src={ sort } className=' w-[32px]' alt="" />
                         </div>
                         <p className=' font-Quicksand w-full font-semibold text-sm md:text-base '>{doc.data().NoteTopic}</p>
                         <p className=' font-Quicksand w-full font-medium mt-1 text-sm md:text-base'>{doc.data().dateTime}</p>
-                        <p className=' font-Quicksand overflow-hidden w-full font-normal bg-transparent mt-1 text-xs md:text-sm mb-6'>{doc.data().NoteContent}</p>
+                        <p className=' font-Quicksand overflow-hidden w-full font-normal bg-transparent mt-1 text-xs md:text-sm mb-6'>{doc.data().NoteContent.substring(0, 70)+'....'}</p>
+                        <span className=' absolute right-6 bottom-3 flex space-x-2'>
+                            <img src={ trash } onClick={ handleClick } alt="" />
+                            <img src={ edit } onClick={ handleEditClick } alt="" />
+                        </span>
                     </motion.div>
                 ))}
             </div>
@@ -206,21 +210,21 @@ const Notes = () => {
                 <div className=' bg-[#fff] rounded-[20px] px-6 py-8 w-full md:w-auto'>
                     <div className=' space-y-4 flex flex-col w-full'>
                         <span className=' flex flex-col space-y-2'>
-                            <label htmlFor="noteTopic" className=' font-Labrada font-medium text-lg'>Note Topic</label>
-                            <input className=' font-Labrada p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={topic} onChange={getNewTopic} type="text" />
+                            <label htmlFor="noteTopic" className=' font-Quicksand font-medium text-lg'>Note Topic</label>
+                            <input className=' font-Quicksand p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={topic} onChange={getNewTopic} type="text" />
                         </span>
                         <span className=' flex flex-col space-y-2'>
-                            <label htmlFor="noteDesc" className=' font-Labrada font-medium text-lg'>Note Description</label>
-                            <input className=' font-Labrada p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={desc} onChange={getNewDesc} type="text" />
+                            <label htmlFor="noteDesc" className=' font-Quicksand font-medium text-lg'>Note Description</label>
+                            <input className=' font-Quicksand p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={desc} onChange={getNewDesc} type="text" />
                         </span>
                         <span className=' flex flex-col space-y-2'>
-                            <label htmlFor="note" className=' font-Labrada font-medium text-lg'>Note</label>
-                            <textarea className=' font-Labrada p-2 text-sm w-full md:w-[350px] h-[170px] bg-[#f1f1f1] rounded-md' defaultValue={content} onChange={getnewContent} type="text" >
+                            <label htmlFor="note" className=' font-Quicksand font-medium text-lg'>Note</label>
+                            <textarea className=' font-Quicksand p-2 text-sm w-full md:w-[350px] h-[170px] bg-[#f1f1f1] rounded-md' defaultValue={content} onChange={getnewContent} type="text" >
                             </textarea>
                         </span>
                         <span className=' flex flex-row ml-auto space-x-5'>
-                            <input type="button" onClick={ getEditValue } className=' font-Labrada font-medium text-base' value="Cancel" />
-                            <input type="button" onClick={ getEditValue } className=' font-Labrada font-medium py-1 px-2 bg-black text-white rounded-md text-base' value="Save" />
+                            <input type="button" onClick={ getEditValue } className=' font-Quicksand font-medium text-base' value="Cancel" />
+                            <input type="button" onClick={ getEditValue } className=' font-Quicksand font-medium py-1 px-2 bg-black text-white rounded-md text-base' value="Save" />
                         </span>
                     </div>
                 </div>

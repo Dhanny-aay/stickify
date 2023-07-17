@@ -1,4 +1,3 @@
-import right from '../images/right.png';
 import logo from '../images/logo.png';
 import load from '../images/load.gif';
 import collab from '../images/collab.png';
@@ -13,12 +12,11 @@ import { motion } from 'framer-motion';
 
 const Signup = () => {
 
-    const [image, setImage] = useState(right)
-
     const Navigate = useNavigate();
     const [name, nameValue] = useState('');
     const [mail, mailValue] = useState('');
     const [password, passValue] = useState('');
+    const [loadValue, setLoadValue] = useState('No')
     const firebaseConfig = {
         apiKey: "AIzaSyBAVjs6k8QqgO1JRFFmPCzLrgxnc3HzFQY",
         authDomain: "stickify-24f12.firebaseapp.com",
@@ -49,9 +47,9 @@ const Signup = () => {
         };
 
         const signUp = ()=>{
-            setImage(load)
             createUserWithEmailAndPassword(auth, mail, password)
             .then((userCredential)=>{
+                setLoadValue('Yes');
                 const user =userCredential.user;
                 const userDoc = collection(db, 'users');
                 const docData ={
@@ -66,7 +64,7 @@ const Signup = () => {
                 const errorMessage = error.message;
                 const err = document.getElementById('error');
                 err.innerHTML=errorCode;
-                setImage(right)
+                setLoadValue('No');
             })
         };
 
@@ -90,7 +88,7 @@ const Signup = () => {
         <div className=" bg-[#FFF6D0] w-full h-[100vh] px-[16px] py-[80px] lg:py-[48px] flex items-center flex-col justify-center md:p-[48px] space-y-6 lg:space-y-0">
             <span className='flex lg:hidden flex-row md:space-x-1 items-center justify-center'>
                 <img src={ logo } className='' alt="" />
-                <p className=" font-Baloo text-2xl text-[#06003C] md:text-3xl font-medium">Stickify</p>
+                <Link to='/'><p className=" font-Baloo text-2xl text-[#06003C] md:text-3xl font-medium">Stickify</p></Link>
             </span>
             <motion.div 
             initial={{x:100, opacity:0}}
@@ -101,7 +99,7 @@ const Signup = () => {
                 <div className=" w-1/2 h-full hidden bg-transparent lg:flex justify-center items-center relative">
                     <span className='absolute top-0 left-0 flex flex-row md:space-x-1 items-center'>
                         <img src={ logo } alt="" />
-                        <p className=" font-Baloo text-xl md:text-2xl font-medium">Stickify</p>
+                        <Link to='/'><p className=" font-Baloo text-xl md:text-2xl font-medium">Stickify</p></Link>
                     </span>
                     <img src={ collab } className=' h-[420px]' alt="" />
                 </div>
@@ -114,7 +112,9 @@ const Signup = () => {
                         <p id='error' className=' font-Baloo text-xs font-medium text-red-700 absolute -bottom-4'></p>
                     </div>
                     <div className='  w-full md:w-[350px] lg:w-full space-y-6 md:space-y-10 flex flex-col items-center'>
-                        <button onClick={ signUp } className=" flex justify-center transition-all space-x-2 items-center w-full md:w-[350px] lg:w-full rounded-[15px] py-2 font-Baloo text-[#121212] text-base font-medium bg-[#ffe25c] hover:bg-opacity-80">Create Account
+                        <button onClick={ signUp } className=" flex justify-center transition-all space-x-2 items-center w-full md:w-[350px] lg:w-full rounded-[15px] py-2 font-Baloo text-[#121212] text-base font-medium bg-[#ffe25c] hover:bg-opacity-80">
+                        { loadValue === 'No' && 'Create Account' }
+                        { loadValue === 'Yes' && <img src={ load } className=' w-6 h-6' alt="" />}
                         </button>
                         <p className=' text-center font-Baloo text-sm md:text-base font-medium'>By creating an account you agree to Stickify’s <span className=' text-[#F4D242]'>Terms of Service</span> and <span className=' text-[#F4D242]'>Privacy Policy</span>.</p>
                         <span className='flex flex-row font-Baloo text-sm space-x-1 text-gray-900'>

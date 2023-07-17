@@ -1,4 +1,3 @@
-import right from '../images/right.png';
 import load from '../images/load.gif';
 import { Link } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
@@ -12,10 +11,10 @@ import collab from '../images/collab1.png';
 
 
 const Login = () => {
-    const [image, setImage] = useState(right)
     const Navigate = useNavigate();
     const [mail, mailValue] = useState('');
     const [password, passValue] = useState('');
+    const [loadValue, setLoadValue] = useState('No')
     
     const firebaseConfig = {
         apiKey: "AIzaSyBAVjs6k8QqgO1JRFFmPCzLrgxnc3HzFQY",
@@ -42,7 +41,7 @@ const Login = () => {
     };
 
     const signIn = ()=>{
-        setImage(load)
+        setLoadValue('Yes');
         signInWithEmailAndPassword(auth, mail, password)
         .then((userCredential)=>{
         })
@@ -51,7 +50,7 @@ const Login = () => {
             // const errorMessage = error.message;
             const err = document.getElementById('error');
             err.innerHTML=errorCode;
-            setImage(right)
+            setLoadValue('No');
         })
     };
 
@@ -74,13 +73,13 @@ const Login = () => {
         className=" bg-[#FFF6D0] w-full h-[100vh] px-[16px] py-[80px] lg:py-[48px] flex items-center flex-col justify-center md:p-[48px] space-y-6 lg:space-y-0">
             <span className='flex lg:hidden flex-row md:space-x-1 items-center justify-center'>
                 <img src={ logo } className='' alt="" />
-                <p className=" font-Baloo text-2xl text-[#06003C] md:text-3xl font-medium">Stickify</p>
+                <Link to='/'><p className=" font-Baloo text-2xl text-[#06003C] md:text-3xl font-medium">Stickify</p></Link>
             </span>
             <div className=" w-full h-full bg-transparent flex flex-row">
                 <div className=" w-1/2 h-full hidden bg-transparent lg:flex justify-center items-center relative">
                     <span className='absolute top-0 left-0 flex flex-row md:space-x-1 items-center'>
                         <img src={ logo } alt="" />
-                        <p className=" font-Baloo text-xl md:text-2xl font-medium">Stickify</p>
+                        <Link to='/'><p className=" font-Baloo text-xl md:text-2xl font-medium">Stickify</p></Link>
                     </span>
                     <img src={ collab } className=' h-[420px]' alt="" />
                 </div>
@@ -94,7 +93,9 @@ const Login = () => {
                         <p id='error' className=' ml-auto text-right block font-Baloo text-sm font-medium text-[#F4D242]'>Forgot Password?</p>
                     </div>
                     <div className='  w-full md:w-[350px] lg:w-full space-y-4 flex flex-col items-center'>
-                        <button onClick={signIn} className=" flex justify-center space-x-2 transition-all items-center w-full md:w-[350px] lg:w-full rounded-[15px] py-2 font-Baloo text-[#121212] text-sm font-bold bg-[#ffe25c] hover:bg-opacity-70">Sign in
+                        <button onClick={signIn} className=" flex justify-center space-x-2 transition-all items-center w-full md:w-[350px] lg:w-full rounded-[15px] py-2 font-Baloo text-[#121212] text-sm font-bold bg-[#ffe25c] hover:bg-opacity-70">
+                        { loadValue === 'No' && 'Sign In' }
+                        { loadValue === 'Yes' && <img src={ load } className=' w-6 h-6' alt="" />}
                         </button>
                         <span className='  flex flex-row font-Baloo text-sm space-x-1 text-gray-900'>
                             <p>Don't Have an Account?</p>
