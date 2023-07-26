@@ -192,13 +192,13 @@ const Notes = () => {
                     initial={{x:250}}
                     animate={{x:0}}
                     transition={{type:'spring', stiffness:50}}
-                    className=' h-[200x] md:h-[150px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
+                    className=' h-[225px] md:h-[200px] lg:h-[200px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
                         <div className=' w-full absolute top-2 right-0 left-0 flex justify-center items-center'>
                             <img src={ sort } className=' w-[32px]' alt="" />
                         </div>
                         <p className=' font-Quicksand w-full font-semibold text-sm md:text-base '>{doc.data().NoteTopic}</p>
                         <p className=' font-Quicksand w-full font-medium mt-1 text-sm md:text-base'>{doc.data().dateTime}</p>
-                        <p className=' font-Quicksand overflow-hidden w-full font-normal bg-transparent mt-1 text-xs md:text-sm mb-6'>{doc.data().NoteContent.substring(0, 70)+'....'}</p>
+                        <p className=' font-Quicksand overflow-y-scroll w-full h-[90px] font-normal bg-transparent mt-1 text-xs md:text-sm scrollbar-hide'>{doc.data().NoteContent}</p>
                         <span className=' absolute right-6 bottom-3 flex space-x-2'>
                             <img src={ trash } onClick={ handleClick } alt="" />
                             <img src={ edit } onClick={ handleEditClick } alt="" />
