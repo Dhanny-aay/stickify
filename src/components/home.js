@@ -342,7 +342,7 @@ const Home = () => {
                     </span>
                 </div>
                 <input style={{background:searchColor, color:textColor}} placeholder='Search for Notes...' type="text" className=' mt-4 w-full md:w-[300px] h-[45px] rounded-[42px] py-2 px-5 font-Quicksand placeholder:font-Quicksand font-normal text-base' />
-                <div className=' w-full h-[70vh] scrollbar-hide md:scrollbar mt-5 overflow-scroll pr-3 lg:pr-8 scrollBB'>
+                <div className=' w-full h-[70vh] scrollbar-hide md:scrollbar mt-5 overflow-scroll pr-3 lg:pr-8 mb-8 scrollBB'>
                     <Notes/>
                 </div>
                 <div className='w-full flex justify-center items-center left-0 right-0 fixed bottom-4 md:bottom-10 px-6 md:px-0 lg:bottom-6'>
