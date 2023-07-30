@@ -192,7 +192,7 @@ const Notes = () => {
                     initial={{x:250}}
                     animate={{x:0}}
                     transition={{type:'spring', stiffness:50}}
-                    className=' h-[225px] md:h-[200px] lg:h-[200px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
+                    className=' h-[225px] md:h-[210px] lg:h-[210px] my-[5px] pb-10 w-[48%] overflow-hidden md:w-[49%] lg:w-[49.5%] rounded-[40px] shadow-sm p-6 relative' style={{ backgroundColor:doc.data().NoteBg }} id={doc.id} key={doc.id}>
                         <div className=' w-full absolute top-2 right-0 left-0 flex justify-center items-center'>
                             <img src={ sort } className=' w-[32px]' alt="" />
                         </div>
