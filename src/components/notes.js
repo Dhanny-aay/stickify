@@ -2,8 +2,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, onSnapshot, query, where, doc, deleteDoc, orderBy, updateDoc} from 'firebase/firestore';
-import trash from '../images/trash.png';
-import edit from '../images/edit.png';
+import trash from '../images/trash.svg';
+import edit from '../images/edit.svg';
 import { useEffect, useState } from 'react';
 import '../index.css';
 import sort from '../images/sort.png';
@@ -207,7 +207,7 @@ const Notes = () => {
                 ))}
             </div>
             {noteEdit && <div className=' w-[100vw] flex justify-center items-center h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.3)] z-[99999] px-3'>
-                <div className=' bg-[#fff] rounded-[20px] px-6 py-8 w-full md:w-auto'>
+                <div className=' bg-[#fff]  px-6 py-8 w-full h-full'>
                     <div className=' space-y-4 flex flex-col w-full'>
                         <span className=' flex flex-col space-y-2'>
                             <label htmlFor="noteTopic" className=' font-Quicksand font-medium text-lg'>Note Topic</label>
