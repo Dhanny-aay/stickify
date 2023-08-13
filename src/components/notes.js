@@ -9,6 +9,10 @@ import '../index.css';
 import sort from '../images/sort.png';
 import bin from '../images/rubbish.png';
 import { motion } from 'framer-motion';
+import whiteClose from '../images/whiteClose.png';
+import close from '../images/close.png';
+import save from '../images/save.png';
+import whiteSave from '../images/whiteSave.png';
 
 const Notes = () => {
 
@@ -98,6 +102,7 @@ const Notes = () => {
     const [topic, setTopic] = useState('');
     const [desc, setDesc] = useState('');
     const [content, setContent] = useState('');
+    const [darkMode, setDarkMode] = useState(false);
 
     const handleEditClick = e =>{
         setnoteEdit(true)
@@ -201,31 +206,36 @@ const Notes = () => {
                         <p className=' font-Quicksand overflow-y-scroll w-full h-[90px] font-normal bg-transparent mt-1 text-xs md:text-sm scrollbar-hide'>{doc.data().NoteContent}</p>
                         <span className=' absolute right-6 bottom-3 flex space-x-2'>
                             <img src={ trash } onClick={ handleClick } alt="" />
-                            <img src={ edit } onClick={ handleEditClick } alt="" />
+                            <img src={ edit } className=' ' onClick={ handleEditClick } alt="" />
                         </span>
                     </motion.div>
                 ))}
             </div>
-            {noteEdit && <div className=' w-[100vw] flex justify-center items-center h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.3)] z-[99999] px-3'>
-                <div className=' bg-[#fff]  px-6 py-8 w-full h-full'>
-                    <div className=' space-y-4 flex flex-col w-full'>
-                        <span className=' flex flex-col space-y-2'>
-                            <label htmlFor="noteTopic" className=' font-Quicksand font-medium text-lg'>Note Topic</label>
-                            <input className=' font-Quicksand p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={topic} onChange={getNewTopic} type="text" />
-                        </span>
-                        <span className=' flex flex-col space-y-2'>
-                            <label htmlFor="noteDesc" className=' font-Quicksand font-medium text-lg'>Note Description</label>
-                            <input className=' font-Quicksand p-2 text-sm w-full md:w-[350px] h-[50px] bg-[#f1f1f1] rounded-md' defaultValue={desc} onChange={getNewDesc} type="text" />
-                        </span>
-                        <span className=' flex flex-col space-y-2'>
-                            <label htmlFor="note" className=' font-Quicksand font-medium text-lg'>Note</label>
-                            <textarea className=' font-Quicksand p-2 text-sm w-full md:w-[350px] h-[170px] bg-[#f1f1f1] rounded-md' defaultValue={content} onChange={getnewContent} type="text" >
-                            </textarea>
-                        </span>
-                        <span className=' flex flex-row ml-auto space-x-5'>
-                            <input type="button" onClick={ getEditValue } className=' font-Quicksand font-medium text-base' value="Cancel" />
-                            <input type="button" onClick={ getEditValue } className=' font-Quicksand font-medium py-1 px-2 bg-black text-white rounded-md text-base' value="Save" />
-                        </span>
+            {noteEdit && <div className=' w-[100vw] flex justify-center items-center h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.3)] z-[99999]'>
+                <div className=' bg-[#fff] lg:py-[35px] lg:px-[80px] w-full h-full'>
+                    {/* <div className=" navbar flex flex-row justify-between items-center">
+                        { darkMode === false && <img src={ close } onClick={ getEditValue } value='Cancel' className=' w-[48px] h-[48px] cursor-pointer' alt="close" />}
+                        { darkMode === true && <img src={ whiteClose } onClick={ getEditValue } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />}
+                        { darkMode === false && <img src={ save } onClick={ getEditValue } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />}
+                        { darkMode === true && <img src={ whiteSave } onClick={ getEditValue } className=' w-[48px] h-[48px] cursor-pointer' alt="close" />}
+                    </div> */}
+                    <div className='md:mt-[24px] mt-8'>
+                        <div className=' space-y-4 flex flex-col w-full mt-4'>
+                            <div className=' '>
+                                <input className='  font-normal text-xl p-3 font-Baloo w-[300px] bg-transparent mt-[6px]' placeholder='Topic...' id='noteTopic' type="text" defaultValue={topic} onChange={getNewTopic} />
+                            </div>
+                            <div className=''>
+                                <input className=' p-3 bg-transparent font-Quicksand font-normal text-sm mt-[0px]' readOnly defaultValue={desc} onChange={getNewDesc} type="text" />
+                            </div>
+                            <div className='w-full'>
+                                <textarea className='w-full h-[50vh] p-3 font-Quicksand font-normal text-base bg-transparent' placeholder='Note content here....' cols="30" rows="10" defaultValue={content} onChange={getnewContent} type="text" >
+                                </textarea>
+                            </div>
+                            <span className=' flex flex-row ml-auto space-x-5'>
+                                <input type="button" onClick={ getEditValue } className=' font-Quicksand font-medium text-base' value="Cancel" />
+                                <input type="button" onClick={ getEditValue } className=' font-Quicksand font-medium py-1 px-2 bg-black text-white rounded-md text-base' value="Save" />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>}
