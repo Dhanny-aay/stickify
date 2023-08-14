@@ -1,4 +1,5 @@
 import logo from '../images/logo.png';
+import logomob from '../images/logo.svg';
 import rightArrow from '../images/arrow-right.svg';
 import flash from '../images/flash.svg';
 import musk from '../images/PlaneRight.png';
@@ -50,9 +51,10 @@ const LandingPage = () => {
         // animate={{ opacity: 1, scale: 1 }}
         // transition={{ duration: 0.5 }}
         className=" flex flex-row justify-between items-center md:px-10 md:py-6 px-4 py-4 z-[9999999999]">
-            <span className=' flex flex-row md:space-x-1 items-center z-[9999999999]'>
-                <img src={ logo } className=' w-[32px] h-[32px] md:w-auto md:h-auto' alt="" />
-                <p className=" font-Baloo text-xl md:text-2xl font-medium">Stickify</p>
+            <span className=' flex flex-row py-3 md:py-0 space-x-1 md:space-x-1 items-end z-[9999999999]'>
+                <img src={ logo } className=' hidden md:block' alt="" />
+                <img src={ logomob } className=' block md:hidden' alt="" />
+                <p className=" font-Baloo text-xl  md:mt-0 md:text-2xl font-medium">Stickify</p>
             </span>
             <span className=' hidden md:flex flex-row space-x-10 items-center'>
                 <p className=' text-base font-Quicksand font-semibold'>Home</p>
@@ -136,7 +138,7 @@ const LandingPage = () => {
             initial={{y:200, opacity:0}}
             whileInView={{y:0, opacity:1}}
             transition={{type:'tween', duration:0.5, delay:0.3}}
-            className=' text-center space-y-2'>
+            className=' text-center'>
                 <p className=' font-Baloo text-2xl md:text-3xl font-semibold'>Our Features</p>
                 <p className=' font-Quicksand text-base md:text-xl font-normal'>Take Control of Your Tasks and Ideas with Stickify's Customizable Features</p>
             </motion.span>
@@ -155,7 +157,7 @@ const LandingPage = () => {
             initial={{y:200, opacity:0}}
             whileInView={{y:0, opacity:1}}
             transition={{type:'tween', duration:0.5, delay:0.3}}
-            className=' flex flex-col-reverse lg:flex-row justify-center md:justify-between items-center mt-11 lg:space-x-20'>
+            className=' flex flex-col-reverse lg:flex-row justify-center md:justify-between items-center mt-16 lg:space-x-20'>
                 <span className=' flex flex-col text-center md:text-left'>
                     <p className=' font-Baloo font-semibold mt-6 lg:mt-0 text-2xl'>Collaboration Tools</p>
                     <p className=' font-Quicksand text-base font-normal'>Stickify's collaboration features allow users to share notes and work together on projects in real time. This is perfect for teams or groups who need to stay on the same page and keep everyone up to date on important information. Users can also assign tasks and track progress, making it easy to stay organized and productive.</p>
@@ -166,7 +168,7 @@ const LandingPage = () => {
             initial={{y:200, opacity:0}}
             whileInView={{y:0, opacity:1}}
             transition={{type:'tween', duration:0.5, delay:0.3}}
-            className=' flex flex-col lg:flex-row justify-center md:justify-between items-center mt-11 lg:space-x-20'>
+            className=' flex flex-col lg:flex-row justify-center md:justify-between items-center mt-16 lg:space-x-20'>
                 <img src={ examse2 } className='' alt="" />
                 <span className=' flex flex-col text-center md:text-left mt-6 lg:mt-0'>
                     <p className=' font-Baloo font-semibold text-2xl'>Editing Tool</p>
@@ -226,7 +228,7 @@ const LandingPage = () => {
         whileInView={{y:0, opacity:1}}
         transition={{type:'tween', duration:0.5, delay:0.3}}
         className=' w-full md:p-11 p-5 z-50 mt-11'>
-            <div className=' w-full h-[594px] lg:h-[350px] z-30 bg-[#fce681] rounded-[50px] flex flex-col lg:flex-row items-center justify-center p-3 md:px-[20px] lg:px-[88px]'>
+            <div className=' w-full h-[594px] lg:h-[350px] z-30 bg-[#fce681] rounded-[20px] flex flex-col lg:flex-row items-center justify-center p-3 md:px-[20px] lg:px-[88px]'>
                 <span className='flex flex-col items-center justify-center lg:items-start'>
                     <p className=' font-Quicksand text-center lg:text-left text-2xl md:text-[30px] md:leading-[48px] font-semibold '>Make productivity a breeze with Stickify's intuitive note-taking system.</p>
                     <Link to='/signup'><button className=' px-6 py-3 bg-black hover:bg-opacity-40 rounded-[60px] block lg:mr-auto  mt-6 text-xl font-Quicksand font-normal text-white'>Sign Up</button></Link>
